@@ -6,11 +6,12 @@ from django.db import models
 class User(models.Model):
     """ This class contains the attributes of the user object"""
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=25)
-    contact_number = models.CharField(max_length=10)
+    first_name = models.CharField(max_length=100, error_messages={'first_name': 'field should only contain alphabets'})
+    last_name = models.CharField(max_length=100, error_messages={'last_name': 'field should only contain alphabets'})
+    username = models.CharField(max_length=100, unique=True,
+                                error_messages={'first_name': 'Username already exists'})
+    password = models.CharField(max_length=100)
+    contact_number = models.CharField(max_length=15)
     email = models.EmailField()
 
     class Role(models.TextChoices):
@@ -45,7 +46,7 @@ class Product(models.Model):
         tv = 'tv'
 
     category_type = models.TextField(choices=Category.choices, default='Null')
-    specifications = JSONField()
+    specification = JSONField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='category')
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -62,8 +63,8 @@ class Product(models.Model):
 class ShopDetail(models.Model):
     """ This class contain the attributes for the shop details object"""
     id = models.AutoField(primary_key=True)
-    shop_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
+    contact_number = models.CharField(max_length=10)
     building_no = models.CharField(max_length=100)
     street_name = models.CharField(max_length=100)
     locality = models.CharField(max_length=100)
@@ -81,7 +82,7 @@ class ShopDetail(models.Model):
                                    related_name='shop_updated_user')
 
     def __str__(self):
-        return self.shop_name
+        return self.name
 
 
 class ShopProduct(models.Model):
