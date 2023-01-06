@@ -6,10 +6,9 @@ from django.db import models
 class User(models.Model):
     """ This class contains the attributes of the user object"""
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=100, error_messages={'first_name': 'field should only contain alphabets'})
-    last_name = models.CharField(max_length=100, error_messages={'last_name': 'field should only contain alphabets'})
-    username = models.CharField(max_length=100, unique=True,
-                                error_messages={'first_name': 'Username already exists'})
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=15)
     email = models.EmailField()
@@ -60,7 +59,7 @@ class Product(models.Model):
         return self.name
 
 
-class ShopDetail(models.Model):
+class Shop(models.Model):
     """ This class contain the attributes for the shop details object"""
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -85,14 +84,15 @@ class ShopDetail(models.Model):
         return self.name
 
 
-class ShopProduct(models.Model):
+class Offer(models.Model):
     """ this class is implemented to maintain the relationship between various product and various shops"""
     id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='shop_product')
-    shop_detail = models.ForeignKey(ShopDetail, on_delete=models.CASCADE, related_name='shop_product')
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='shop_product')
     actual_price = models.FloatField(default=0)
-    offer_percentage = models.FloatField(max_length=5)
-    vendor_price = models.FloatField()
+    offer_percentage = models.FloatField(default=0)
+    vendor_price = models.FloatField(default=0)
+    product_url = models.URLField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shop_product')
     created_on = models.DateTimeField(auto_now_add=True)
