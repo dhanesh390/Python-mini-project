@@ -27,7 +27,7 @@ class InvalidInput(Exception):
             return 'Invalid input, Enter again'
 
 
-class InvalidValue(APIException):
+class InvalidValueException(APIException):
     status_code = status.HTTP_400_BAD_REQUEST
     default_detail = _('Invalid input.')
     default_code = 'invalid'

@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'e_product_comparison',
+    'offer',
+    'product',
+    'shop',
+    'user'
 ]
+
+SILENCED_SYSTEM_CHECKS = ['fields.E300', 'fields.E307']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,35 +128,35 @@ REST_FRAMEWORK = {
 #     'EXCEPTION_HANDLER': 'e_product.utils.custom_exception_handler.custom_exception_handler'
 # }
 
-LOGGING = {
-    'version': 1,
-    # The version number of our log
-    'disable_existing_loggers': False,
-    'formatters': {
-            'verbose': {
-                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-                'style': '{',
-            },
-            'simple': {
-                'format': '{levelname} {message}',
-                'style': '{',
-            },
-        },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'e_product_comparison.log',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     # The version number of our log
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#             'verbose': {
+#                 'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+#                 'style': '{',
+#             },
+#             'simple': {
+#                 'format': '{levelname} {message}',
+#                 'style': '{',
+#             },
+#         },
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': BASE_DIR / 'e_product_comparison.log',
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

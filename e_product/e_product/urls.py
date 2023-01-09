@@ -13,13 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from rest_framework.views import exception_handler
 from http import HTTPStatus
 from typing import Any
 
+from django.contrib import admin
+from django.urls import path, include
 from rest_framework.views import Response
+from rest_framework.views import exception_handler
 
 
 def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Response:
@@ -52,5 +52,8 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Response:
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('e_product_comparison.urls'))
+    path('', include('user.urls')),
+    path('', include('shop.urls')),
+    path('', include('offer.urls')),
+    path('', include('product.urls'))
 ]
