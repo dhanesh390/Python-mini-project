@@ -1,0 +1,21 @@
+2023-01-19 15:01:48,256 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:48,946 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:49,392 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:49,883 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:50,341 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:50,896 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:51,398 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:51,757 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:52,217 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:52,608 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:53,031 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:53,448 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:01:54,067 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:03:09,559 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:05:23,146 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:13:20,224 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:13:58,130 - crawl_logger - ERROR - Attribute error occurred 
+2023-01-19 15:25:52,270 - crawl_logger - ERROR - Attribute error occurred as 'NoneType' object has no attribute 'find'
+2023-01-19 15:40:40,249 - crawl_logger - ERROR - Attribute error occurred as 'NoneType' object has no attribute 'find'
+2023-01-19 15:47:40,084 - crawl_logger - ERROR - Attribute error occurred as 'NoneType' object has no attribute 'find'
+2023-01-19 15:48:15,519 - crawl_logger - ERROR - Attribute error occurred as 'NoneType' object has no attribute 'find'
