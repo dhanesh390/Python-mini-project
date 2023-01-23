@@ -7,7 +7,7 @@ from user.models import User
 class Product(models.Model):
     """ This class contains the attributes of the product object"""
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     description = models.TextField(max_length=200)
 
     class Category(models.TextChoices):

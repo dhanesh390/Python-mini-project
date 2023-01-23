@@ -1,7 +1,18 @@
 NAME_PATTERN = '[A-Za-z]{2,25}'
 CONTACT_PATTERN = '^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$'
+USER = 'user'
+SHOP = 'shop'
+PRODUCT = 'product'
+OFFER = 'offer'
 MESSAGE = 'message'
-USER_RESPONSE = 'No data found for the users'
+USER_RESPONSE = 'No user found for this id'
+PRODUCT_RESPONSE = 'No product found for this id'
+SHOP_RESPONSE = 'No shop found for this id'
+OFFER_RESPONSE = 'No offer found for this id'
+USER_LIST_RESPONSE = 'No data found for the users'
+PRODUCT_LIST_RESPONSE = 'No data found for products'
+SHOP_LIST_RESPONSE = 'No data found for shops'
+OFFER_LIST_RESPONSE = 'No data found for offers'
 TRUE = True
 FALSE = False
 
@@ -38,14 +49,19 @@ SHOP_SCHEMA = {
                  'country', 'pincode']
 }
 
-
-# validate_value = Validator({
-#     'first_name': {'type': 'string', 'required': True},
-#     'last_name': {'type': 'string', 'required': True},
-#     'username': {'type': 'string', 'required': True},
-#     'password': {'type': 'string', 'required': True},
-#     'contact_number': {'type': 'string', 'required': True},
-#     'email': {'type': 'string', 'format': 'email', 'required': True},
-#     'user_role': {'type': 'string', 'required': True},
-#     'is_seller': {'enum': [True, False], 'required': False}})
-# print('1: ', validate_value.validate(request.data))
+PRODUCT_SCHEMA = {
+    'name': 'product',
+    'properties': {
+        'name': {'type': 'string'},
+        'description': {'type': 'string'},
+        'category_type': {'enum': ['mobile', 'laptop', 'tv']},
+        'specification': {
+            'type': 'object',
+            'properties': {
+                'color': {'type': 'string'},
+                'storage': {'type': 'string'}
+            }
+        }
+    },
+    'required': ['name', 'description', 'category_type', 'specification']
+}

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ValidationError
 
 from .models import Product
 from .product_logger import logger
@@ -14,6 +15,11 @@ class ProductSerializer(ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
+        if data['name'] is None:
+            raise ValidationError('Product name should not be null')
+        else:
+            name = data['name'].upper()
+            data['name'] = name
         return data
 
 

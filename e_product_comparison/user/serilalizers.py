@@ -14,10 +14,6 @@ from e_product_comparison.myconstants import CONTACT_PATTERN
 class UserSerializer(ModelSerializer):
     """ This class is implemented to serialize the user data"""
 
-    class Meta:
-        model = User
-        fields = '__all__'
-
     def validate(self, data):
         logger.info('Entering the user serializer validation ')
         """
@@ -25,12 +21,15 @@ class UserSerializer(ModelSerializer):
         :param data: user instance data object
         :return: validated data of the user object
         """
+
         if not re.match(NAME_PATTERN, data['first_name']):
             logger.error(f'Invalid first name {data["first_name"]}')
             raise ValidationError(f'Invalid first name {data["first_name"]}, Enter a valid name')
         if not re.match(NAME_PATTERN, data['last_name']):
             logger.error(f'Invalid last name {data["last_name"]}')
             raise ValidationError(f'Invalid last name {data["last_name"]}, Enter a valid name')
+        # if User.objects.get(is_active=True, username=data['username']):
+        #     raise ValidationError(f'user already exists{data["username"]}')
         if len(data['username']) < 6:
             raise ValidationError('username should be more than 6 characters')
         if not re.match(CONTACT_PATTERN, data['contact_number']):
@@ -49,6 +48,10 @@ class UserSerializer(ModelSerializer):
             data['password'] = password
         logger.info('user data successfully validated and serialized')
         return data
+
+    class Meta:
+        model = User
+        fields = '__all__'
 
 
 class UserResponseSerializer(ModelSerializer):

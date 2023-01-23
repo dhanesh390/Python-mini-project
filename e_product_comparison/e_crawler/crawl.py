@@ -48,15 +48,25 @@ def crawl_flipkart(start_url):
             continue_crawling = False
             print('scraping completed due to attributre error')
         else:
-            for i in zip(product_titles, product_price, product_offer, product_offer_price, product_data):
-                name = re.sub("\(.*?\)", "()", i[0].text)
+            for data in zip(product_titles, product_price, product_offer, product_offer_price, product_data):
+                specifications = re.findall("\(.*?\)", data[0].text)
+                print('specifications: ', specifications)
+                print('1: ', specifications[0])
+                color = specifications[0].replace('(', '').replace(')', '').split(',')
+                print('2: ', type(color))
+                if len(color) > 1:
+                    print('3: ', color[0])
+                    print('4: ', color[1])
+                else:
+                    print('3: ', color[0])
+                name = re.sub("\(.*?\)", "()", data[0].text)
                 product_name = name.replace('()', '').rstrip(' ')
-                original_price = i[1].text.replace('₹', '').replace(',', '')
-                offer_percentage = i[2].text.replace('off', '').replace('%', '')
-                vendor_price = i[3].text.replace('₹', '').replace(',', '')
-                product_url = 'https://www.flipkart.com' + i[4].get("href")
+                original_price = data[1].text.replace('₹', '').replace(',', '')
+                offer_percentage = data[2].text.replace('off', '').replace('%', '')
+                vendor_price = data[3].text.replace('₹', '').replace(',', '')
+                product_url = 'https://www.flipkart.com' + data[4].get("href")
 
-                create_offers(shop_id=1, product_name=product_name, original_price=original_price,
+                create_offers(shop_id=1, product_name=product_name.upper(), original_price=original_price,
                               offer_percentage=offer_percentage,
                               vendor_price=vendor_price, product_url=product_url)
 
@@ -75,23 +85,25 @@ def crawl_e_websites(start_url):
         product_price = soup.find_all(SPAN, attrs={'data-testid': 'old-price'})
         product_data = soup.find_all(DIV, class_='product-img')
 
-        for i in zip(product_titles, product_price, product_offer, product_offer_price, product_data):
-            name = re.sub("\(.*?\)", "()", i[0].text)
+        for data in zip(product_titles, product_price, product_offer, product_offer_price, product_data):
+            name = re.sub("\(.*?\)", "()", data[0].text)
             name = name.replace('()', '').rstrip(' ')
-            create_offers(shop_id=3, product_name=name,
-                          original_price=i[1].text.replace('₹', '').replace(',', '').replace('MRP:', ''),
-                          offer_percentage=i[2].text.replace('Off', '').replace('%', ''),
-                          vendor_price=i[3].text.replace('₹', '').replace(',', '').replace('MRP:', ''),
-                          product_url='https://www.croma.com' + i[4].next.get('href'))
+            create_offers(shop_id=3, product_name=name.upper(),
+                          original_price=data[1].text.replace('₹', '').replace(',', '').replace('MRP:', ''),
+                          offer_percentage=data[2].text.replace('Off', '').replace('%', ''),
+                          vendor_price=data[3].text.replace('₹', '').replace(',', '').replace('MRP:', ''),
+                          product_url='https://www.croma.com' + data[4].next.get('href'))
 
 
 def create_offers(shop_id, product_name, original_price, offer_percentage, vendor_price, product_url):
     with connection.cursor() as cursor:
-        qry = "SELECT id, name FROM product_product WHERE name = (%s);"
+        qry = "SELECT id, name FROM product_product WHERE name like (%s);"
         print('name: ', product_name)
         cursor.execute(qry, (product_name,))
         product = cursor.fetchone()
+        print('product: ', product)
         if product is not None:
+            print('into query: ', product[1])
             query = '''INSERT into offer_offer(product_id, shop_id, actual_price, offer_percentage,
                     vendor_price, product_url, is_active, created_on,
                      updated_on) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);'''
@@ -113,9 +125,9 @@ if __name__ == "__main__":
         match user_choice:
             case 1:
                 print('Crawling flipkart for iphones')
-                crawl_flipkart('https://www.flipkart.com/search?q=iphone+mobile&page=%s')
+                # crawl_flipkart('https://www.flipkart.com/search?q=iphone+mobile&page=%s')
                 # print('crawling flipkart for android phones')
-                # crawl_flipkart('https://www.flipkart.com/search?q=android+mobile&page=%s')
+                crawl_flipkart('https://www.flipkart.com/search?q=android+mobile&page=%s')
                 # print('crawling electronics')
 
             case 2:

@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import Offer
 from e_product_comparison.custom_exception import InvalidValueException
 from .offer_logger import logger
+from shop.models import Shop
 
 
 class OfferSerializer(ModelSerializer):
@@ -34,6 +35,13 @@ class OfferResponseSerializer(ModelSerializer):
     original_price = serializers.FloatField(source='actual_price')
     offer_price = serializers.FloatField(source='vendor_price')
 
+    class ShopResponseSerializer(ModelSerializer):
+        class Meta:
+            model = Shop
+            fields = ['name']
+
+    shop = ShopResponseSerializer()
+
     class Meta:
         model = Offer
-        fields = ["id", "original_price", "offer_percentage", "offer_price", "product_url", "shop", "product"]
+        fields = ["id", "original_price", "offer_percentage", "offer_price", "product_url", "shop"]

@@ -1,3 +1,5 @@
+import re
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, get_list_or_404
 from product.serializers import ProductResponseSerializer
@@ -11,7 +13,9 @@ from .serializers import OfferSerializer, OfferResponseSerializer
 from .offer_logger import logger
 from product.models import Product
 from shop.models import Shop
-from e_product_comparison.myconstants import TRUE, FALSE, MESSAGE
+from e_product_comparison.myconstants import TRUE, FALSE, MESSAGE, USER, OFFER, PRODUCT, OFFER_LIST_RESPONSE, OFFER_RESPONSE, PRODUCT_RESPONSE, PRODUCT_LIST_RESPONSE
+
+from custom_api_response import custom_error_response
 
 
 class OfferViewSet(ModelViewSet):
@@ -57,11 +61,16 @@ class OfferViewSet(ModelViewSet):
                                 status=status.HTTP_400_BAD_REQUEST)
         except Shop.DoesNotExist:
             logger.error(f'shop for the id {request.data["shop"]} does not exist')
-            return JsonResponse({'shop': f'shop for the id {request.data["shop"]} does not exist'},
+            return custom_error_response({'shop': f'shop for the id {request.data["shop"]} does not exist'},
                                 status=status.HTTP_400_BAD_REQUEST)
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {request.headers.get("user-id")}')
-            return JsonResponse({MESSAGE: ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+            title = re.findall("'([^']*)'", ex.args[0])
+            return custom_error_response(title[0], ex.args[0], 400)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(OFFER, ex.args[0], 400)
 
     def update(self, request, *args, **kwargs):
         logger.info('entering the offer updating module')
@@ -73,12 +82,13 @@ class OfferViewSet(ModelViewSet):
         :return: returns the json response of the updated shop_product object or error response in the same
         """
         try:
-            updated_by = request.headers.get('id')
-            print('1: ', updated_by)
+            param = self.request.query_params
+            user_id = param.get('id')
+            print('id: ', user_id)
+            # print('id: ', user_id)
+            # updated_by = request.headers.get('id')
             instance = self.get_object()
-            print('2: ', instance)
-            instance.updated_by = get_object_or_404(User, is_active=TRUE, id=updated_by)
-            print('3: ', instance.updated_by)
+            instance.updated_by = get_object_or_404(User, is_active=TRUE, id=user_id)
             shop_product_serializer = self.get_serializer(instance, data=request.data)
             shop_product_serializer.is_valid(raise_exception=TRUE)
             self.perform_update(shop_product_serializer)
@@ -90,7 +100,12 @@ class OfferViewSet(ModelViewSet):
                                 status=status.HTTP_400_BAD_REQUEST)
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {request.headers.get("id")}')
-            return JsonResponse({MESSAGE: ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+            title = re.findall("'([^']*)'", ex.args[0])
+            return custom_error_response(title[0], ex.args[0], 400)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(OFFER, ex.args[0], 400)
 
 
 class OfferUpdateViewSet(APIView):
@@ -100,7 +115,7 @@ class OfferUpdateViewSet(APIView):
     """
 
     @staticmethod
-    def patch(request, offer_id=None):
+    def delete(request, offer_id=None):
         logger.info('entering the module to soft delete the offers')
         """
         This method is used to delete the offer instance
@@ -109,20 +124,24 @@ class OfferUpdateViewSet(APIView):
         :return: returns the updated response message
         """
         try:
-            shop_product = get_object_or_404(Offer, id=offer_id)
-            shop_product_data = {'is_active': FALSE}
-            shop_product_serializer = OfferResponseSerializer(shop_product, data=shop_product_data, partial=TRUE)
-            if shop_product_serializer.is_valid():
-                shop_product_serializer.save()
+            offer = get_object_or_404(Offer, id=offer_id)
+            if offer.is_active:
+                offer.is_active = FALSE
+                offer.save()
                 return JsonResponse({MESSAGE: 'offer successfully deleted '}, status=status.HTTP_200_OK)
-            return JsonResponse({MESSAGE: "wrong parameters"}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({MESSAGE: "No offers found"}, status=status.HTTP_400_BAD_REQUEST)
         except Offer.DoesNotExist:
             logger.error(f'offer does not exist for the id {offer_id}')
             return JsonResponse({'user': f'User does not exist for the id {offer_id}'},
                                 status=status.HTTP_400_BAD_REQUEST)
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {offer_id}')
-            return JsonResponse({MESSAGE: ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+            title = re.findall("'([^']*)'", ex.args[0])
+            return custom_error_response(title[0], ex.args[0], 400)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(OFFER, ex.args[0], 400)
 
 
 class OfferView(APIView):
@@ -134,22 +153,32 @@ class OfferView(APIView):
     @staticmethod
     def get(request, product_id=None):
         try:
-            shop_product = get_list_or_404(Offer, product_id=product_id, is_active=TRUE)
-            shop_product_serializer = OfferResponseSerializer(shop_product, many=TRUE)
-            product = get_object_or_404(Product, id=product_id)
+            logger.info(f'finding the product {product_id}')
+            product = Product.objects.get(is_active=TRUE, id=product_id)
+            logger.info(f'product found for the id {product_id}')
             product_serializer = ProductResponseSerializer(product)
-            response = {'product': product_serializer.data, 'offers': shop_product_serializer.data}
-            return JsonResponse(response, status=status.HTTP_200_OK)
+            # print('id: ', request.get('id'))
+            logger.info(f'finding offers for products using product id {product_id}')
+            offer = get_list_or_404(Offer, product_id=product_id, is_active=TRUE)
+            logger.info(f'offers found for the product {product_id}')
+            offer_serializer = OfferResponseSerializer(offer, many=TRUE)
+
+            response = {'product': product_serializer.data, 'offers': offer_serializer.data}
+            return JsonResponse(response.items(), status=status.HTTP_200_OK)
         except Product.DoesNotExist:
-            logger.error(f'No product found for the id {product_id}')
-            return JsonResponse({'product': f'No product found for the id {product_id}'})
+            logger.error(f'{PRODUCT_RESPONSE} {product_id}')
+            return custom_error_response(PRODUCT, f'{PRODUCT_RESPONSE} {product_id}', 400)
         except Offer.DoesNotExist:
-            logger.error(f'offer does not exist for the product of id {product_id}')
-            return JsonResponse({'user': f'User does not exist for the product of id {product_id}'},
-                                status=status.HTTP_400_BAD_REQUEST)
+            logger.error(f'{OFFER_RESPONSE} of the product {product_id}')
+            return custom_error_response(OFFER, f'{OFFER_RESPONSE} of the product {product_id}', 400)
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {product_id}')
-            return JsonResponse({MESSAGE: ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+            title = re.findall("'([^']*)'", ex.args[0])
+            return custom_error_response(title[0], ex.args[0], 400)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(OFFER, ex.args[0], 400)
 
 
 class ViewOffersByProductName(APIView):
@@ -160,19 +189,36 @@ class ViewOffersByProductName(APIView):
     @staticmethod
     def get(request, name=None):
         try:
-            product = get_object_or_404(Product, name=name, is_active=TRUE)
-            product_serializer = ProductResponseSerializer(product)
-            offers = get_list_or_404(Offer, product_id=product.id, is_active=TRUE)
-            offer_serializer = OfferResponseSerializer(offers, many=TRUE)
+            logger.info(f'finding the product {name}')
+            product = Product.objects.filter(name=name, is_active=TRUE)
+            logger.info(f'product found for the name {name}')
+            if product:
+                product_serializer = ProductResponseSerializer(product)
+                logger.info(f'finding offers for products using product name {name}')
+            else:
+                logger.error(PRODUCT_RESPONSE)
+                return custom_error_response(PRODUCT, PRODUCT_LIST_RESPONSE, 400)
+
+            offers = Offer.objects.filter(product_id=product.id, is_active=TRUE)
+            if offers:
+                logger.info(f'offers found for the product {name}')
+                offer_serializer = OfferResponseSerializer(offers, many=TRUE)
+            else:
+                logger.error(OFFER_LIST_RESPONSE)
+                return custom_error_response(OFFER, OFFER_LIST_RESPONSE, 400)
             response = {'product': product_serializer.data, 'offers': offer_serializer.data}
             return JsonResponse(response, status=status.HTTP_200_OK)
         except Product.DoesNotExist:
-            logger.error(f'No product found for the name {name}')
-            return JsonResponse({'product': f'No product found for the name {name}'})
+            logger.error(f'{PRODUCT_RESPONSE} {product.id}')
+            return custom_error_response(PRODUCT, f'{PRODUCT_RESPONSE} {name}', 400)
         except Offer.DoesNotExist:
-            logger.error(f'offer does not exist for the product of name {name}')
-            return JsonResponse({'user': f'User does not exist for the product of id {name}'},
-                                status=status.HTTP_400_BAD_REQUEST)
+            logger.error(f'{OFFER_RESPONSE} of the product {product.id}')
+            return custom_error_response(OFFER, f'{OFFER_LIST_RESPONSE} {name}', 400)
         except ValueError as ex:
             logger.error(f'Invalid value for the key name {name}')
-            return JsonResponse({MESSAGE: ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+            title = re.findall("'([^']*)'", ex.args[0])
+            return custom_error_response(title[0], ex.args[0], 400)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(OFFER, ex.args[0], 400)
