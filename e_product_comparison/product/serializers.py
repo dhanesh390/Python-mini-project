@@ -7,8 +7,16 @@ from .product_logger import logger
 
 
 class ProductSerializer(ModelSerializer):
-    logger.info('into the product serializer module')
     """ This class is implemented to serialize and deserialize the product object"""
+    logger.info('into the product serializer module')
+    # name = serializers.CharField(source='product_name')
+    # description = serializers.CharField(source='descriptions')
+    # category_type = serializers.CharField(source='category')
+    # specification = serializers.JSONField(source='specifications')
+    #
+    # class Meta:
+    #     model = Product
+    #     fields = ['name', 'description', 'category_type', 'specification']
 
     class Meta:
         model = Product
@@ -17,9 +25,17 @@ class ProductSerializer(ModelSerializer):
     def validate(self, data):
         if data['name'] is None:
             raise ValidationError('Product name should not be null')
-        else:
-            name = data['name'].upper()
-            data['name'] = name
+
+        name = data['name'].upper()
+        data['name'] = name
+        if data['specification']['color'] is None:
+            raise ValidationError('specification color should not be null')
+        color = data['specification']['color'].upper()
+        data['specification']['color'] = color
+        if data['specification']['storage'] is None:
+            raise ValidationError('specification storage should not be null')
+        storage = data['specification']['storage'].upper()
+        data['specification']['storage'] = storage
         return data
 
 
@@ -28,9 +44,19 @@ class ProductResponseSerializer(ModelSerializer):
     """
     This class is implemented to deserialize the product response object
     """
+
     product_name = serializers.CharField(source='name')
-    specifications = serializers.JSONField(source='specification')
+    product_description = serializers.JSONField(source='description')
+    category = serializers.CharField(source='category_type')
+
+    class SpecificationSerializer(serializers.JSONField):
+        def to_representation(self, value):
+            value['product_color'] = value.pop('color')
+            value['product_storage'] = value.pop('storage')
+            return super().to_representation(value=value)
+
+    product_specifications = SpecificationSerializer(source='specification')
 
     class Meta:
         model = Product
-        fields = ['id', 'product_name', 'description', 'category_type', 'specifications']
+        fields = ['id', 'product_name', 'product_description', 'category', 'product_specifications']

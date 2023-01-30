@@ -1,39 +1,30 @@
 import re
 
 import jsonschema
-from jsonschema import Validator
-from django.db import IntegrityError
+from custom_api_response import custom_error_response
 from django.http import JsonResponse
-from django.shortcuts import get_list_or_404, get_object_or_404
-
 from rest_framework import status
-from rest_framework.templatetags.rest_framework import data
+from rest_framework.serializers import ValidationError
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.serializers import ValidationError
 
 from .models import User
 from .serilalizers import UserResponseSerializer
 from .serilalizers import UserSerializer
+from .user_constants import USER_SCHEMA, USER, USER_RESPONSE, USER_LIST_RESPONSE, TRUE, FALSE, MESSAGE
 from .user_logger import logger
-from e_product_comparison.custom_exception import DataNotFoundException
-from e_product_comparison.myconstants import MESSAGE, TRUE, FALSE, USER_SCHEMA, USER_RESPONSE, USER, USER_LIST_RESPONSE
-
-from custom_api_response import api_exception_handler
-from custom_api_response import custom_error_response
 
 
 class UserViewSet(ModelViewSet):
-    logger.info('Into the user view set')
     """
      A view set that provides `create()`, `retrieve()`, `update()`,
     `list()` actions for the user model instance
     """
+    logger.info('Into the user view set')
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
 
     def create(self, request, *args, **kwargs):
-        logger.info('Entering the user creation method')
         """
         This method overrides the default create method to implement custom functions to the user instance
         :param request: request object of the user instance
@@ -41,6 +32,7 @@ class UserViewSet(ModelViewSet):
         :param kwargs: extra keyword argument for user object
         :return: JsonResponse of the created user object else valid error response
         """
+        logger.info('Entering the user creation method')
         try:
             jsonschema.validate(request.data, USER_SCHEMA)
             user = self.get_serializer(data=request.data)
@@ -84,20 +76,18 @@ class UserViewSet(ModelViewSet):
         try:
             logger.info('Module to list the entire user data')
             users = User.objects.filter(is_active=TRUE)
-            logger.info('user data retrieved')
             if users:
+                logger.info('user data retrieved')
                 users_serializer = UserResponseSerializer(users, many=TRUE)
                 return JsonResponse({'user': users_serializer.data}, status=status.HTTP_200_OK)
-            else:
-                logger.error(USER_LIST_RESPONSE)
-                return custom_error_response(USER, USER_LIST_RESPONSE, 400)
+            logger.error(USER_LIST_RESPONSE)
+            return JsonResponse({USER: USER_LIST_RESPONSE}, status=status.HTTP_200_OK)
 
         except Exception as ex:
-            logger.error('No data found for the users')
+            logger.error(f'{ex} has occurred')
             return custom_error_response(USER, ex.args[0], 400)
 
     def retrieve(self, request, *args, **kwargs):
-        logger.info('entering the module to retrieve a single user data')
         """
         This method is used to get the user by id
         :param request: request to get user associated with the request id
@@ -105,24 +95,29 @@ class UserViewSet(ModelViewSet):
         :param kwargs: extra keyword argument for user object
         :return: Returns the user object as json response or return the exception msg as json response
         """
+        logger.info('entering the module to retrieve a single user data')
         user_id = kwargs.get('pk')
         try:
-            logger.info(f'finding the user object for the id ')
-            user = User.objects.get(is_active=TRUE, id=user_id)
-            logger.info(f'user object found for the id ')
-            user_serializer = UserResponseSerializer(user)
-            return JsonResponse(user_serializer.data, status=status.HTTP_200_OK)
-        except User.DoesNotExist:
-            logger.error(f'{USER_RESPONSE} of id {user_id}')
-            return custom_error_response(USER,  f'{USER_RESPONSE} {user_id}', 400)
+            logger.info(f'finding the user object for the {user_id}')
+            user = User.objects.filter(is_active=TRUE, id=user_id)
+            if user:
+                logger.info(f'user object found for the id {user_id} ')
+                user_serializer = UserResponseSerializer(user[0])
+                return JsonResponse(user_serializer.data, status=status.HTTP_200_OK)
+            logger.error(f'{USER_RESPONSE} {user_id}')
+            return JsonResponse({USER: f'{USER_RESPONSE} {user_id}'}, status=status.HTTP_400_BAD_REQUEST)
 
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {user_id}')
             title = re.findall("'([^']*)'", ex.args[0])
             return custom_error_response(title[0], ex.args[0], 400)
 
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(USER, ex.args[0], 400)
+
     def update(self, request, *args, **kwargs):
-        logger.info('entering the module to update an user object')
+
         """
         This method is used to update the user object
         :param request: To update the user object of the request id
@@ -130,19 +125,19 @@ class UserViewSet(ModelViewSet):
         :param kwargs: extra keyword argument for user object
         :return: returns the updated user object as json response else return the raised exception in json format
         """
+        logger.info('entering the module to update an user object')
         try:
             logger.info('Entering the user updating method')
-            updated_by = kwargs.get('pk')
+            user = kwargs.get('pk')
             instance = self.get_object()
-            instance.updated_by = User.objects.get(is_active=TRUE, id=updated_by)
+            instance.updated_by = User.objects.get(is_active=TRUE, id=user)
             if instance.updated_by:
                 user_serializer = UserResponseSerializer(instance, data=request.data)
                 user_serializer.is_valid(raise_exception=TRUE)
                 self.perform_update(user_serializer)
                 return JsonResponse(user_serializer.data, status=status.HTTP_200_OK)
-            else:
-                logger.error(f'{USER_RESPONSE} {updated_by}')
-                return custom_error_response(USER, f'{USER_RESPONSE} {updated_by}', 400)
+            logger.error(f'{USER_RESPONSE} {user}')
+            return custom_error_response(USER, f'{USER_RESPONSE} {user}', 400)
         except User.DoesNotExist as ex:
             logger.error(f'{USER_RESPONSE} {kwargs.get("pk")}')
             return custom_error_response(USER, ex.args[0], 400)
@@ -159,31 +154,34 @@ class UserUpdateView(APIView):
     """
      A view set that provides `update()` action for the user model instance
     """
-
-    @staticmethod
-    def delete(request, pk=None):
-        logger.info('entering the module to soft delete the user')
+    def delete(self, request):
         """
         This method is used to delete the requested user object
         :param request: data of the user object
-        :param pk: id of the user object to be deleted
         :return: json response of the user object deleted message or else error message
         """
         try:
-            user = User.objects.get(pk=pk)
-            if user.is_active:
-                user.is_active = FALSE
-                user.save()
-                return JsonResponse({MESSAGE: 'User successfully deleted'}, status=status.HTTP_200_OK)
-            return JsonResponse({MESSAGE: f'{USER_RESPONSE} {pk}'}, status=status.HTTP_400_BAD_REQUEST)
-        except User.DoesNotExist:
-            logger.error(f'{USER_RESPONSE} {pk}')
-            return custom_error_response(USER, f'{USER_RESPONSE} {pk}', 400)
+            logger.info('entering the module to soft delete the user')
+            user = User.objects.filter(id=self.request.query_params.get('user-id'))
+            if user and user[0].is_active:
+                logger.info('user is found to be an active user')
+                user[0].is_active = FALSE
+                updated_by = User.objects.filter(is_active=True, id=request.headers.get('user'))
+                if updated_by:
+                    user[0].updated_by = updated_by[0]
+                    user[0].save()
+                    logger.info('User successfully deleted')
+                    return JsonResponse({MESSAGE: 'User successfully deleted'}, status=status.HTTP_200_OK)
+                logger.info(f'{USER_RESPONSE} {request.headers.get("user")}')
+                return JsonResponse({MESSAGE: f'{USER_RESPONSE} {request.headers.get("user")}'})
+            logger.info(f'{USER_RESPONSE}')
+            return JsonResponse({MESSAGE: f'{USER_RESPONSE} {self.request.query_params.get("user-id")}'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
         except ValueError as ex:
             logger.error(ex.args[0])
             title = re.findall("'([^']*)'", ex.args[0])
             return custom_error_response(title[0], ex.args[0], 400)
-
         except Exception as ex:
             logger.error(ex.args[0])
             return custom_error_response(USER, ex.args[0], 400)
@@ -194,23 +192,24 @@ class GetUserByRole(APIView):
     This class is implemented to contain method to retrieve the list of users by their role
     """
 
-    @staticmethod
-    def get(request, role=None):
+    def get(self, request):
         """
         This method is used to retrieve the list of users based on their role
         :param request: get list of users based on role
-        :param role: name of the role
         :return: list of users for the respective role or error response
         """
+
         try:
-            users = User.objects.filter(user_role=role, is_active=TRUE)
+            if self.request.query_params.get('role'):
+                users = User.objects.filter(is_active=TRUE, user_role=self.request.query_params.get('role'))
+            else:
+                users = User.objects.filter(is_active=TRUE)
             if users:
                 user_serializer = UserResponseSerializer(users, many=TRUE)
-                logger.info(f'users for the role {role} successfully returned')
+                logger.info(f'users successfully returned')
                 return JsonResponse({'users': user_serializer.data}, status=status.HTTP_200_OK)
-            else:
-                logger.error(USER_LIST_RESPONSE)
-                return custom_error_response(USER, USER_LIST_RESPONSE, 400)
+            logger.error(USER_LIST_RESPONSE)
+            return JsonResponse({USER: USER_LIST_RESPONSE}, status=status.HTTP_200_OK)
         except ValueError as ex:
             logger.error(f'Invalid value for parameter role {ex.args[0]}')
             title = re.findall("'([^']*)'", ex.args[0])
@@ -219,3 +218,4 @@ class GetUserByRole(APIView):
         except Exception as ex:
             logger.error(ex.args[0])
             return custom_error_response(USER, ex.args[0], 400)
+

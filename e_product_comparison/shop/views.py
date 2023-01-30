@@ -1,21 +1,19 @@
 import re
 
 import jsonschema
+from custom_api_response import custom_error_response
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, get_list_or_404
+from e_product_comparison.myconstants import USER_RESPONSE, USER, SHOP_LIST_RESPONSE, SHOP_RESPONSE
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from user.models import User
+from user.serilalizers import UserResponseSerializer
 
 from .models import Shop
 from .serializers import ShopDetailsSerializer, ShopResponseSerializer
+from .shop_constants import SHOP_SCHEMA, SHOP, SHOP_RESPONSE, SHOP_LIST_RESPONSE, TRUE, FALSE, MESSAGE, ERROR_PATTERN
 from .shop_logger import logger
-from user.serilalizers import UserResponseSerializer
-
-from e_product_comparison.myconstants import TRUE, FALSE, MESSAGE, SHOP_SCHEMA, SHOP, USER_RESPONSE, USER, SHOP_LIST_RESPONSE, SHOP_RESPONSE
-
-from custom_api_response import custom_error_response
 
 
 class ShopViewSet(ModelViewSet):
@@ -30,7 +28,6 @@ class ShopViewSet(ModelViewSet):
     serializer_class = ShopDetailsSerializer
 
     def create(self, request, *args, **kwargs):
-        logger.info('Entering the shop creation module')
         """
         This method is used to create the shop object from the request
         :param request: data object for the shop instance
@@ -39,6 +36,7 @@ class ShopViewSet(ModelViewSet):
         :return: returns the json response of the shop object or error response of the same
         """
         try:
+            logger.info('Entering the shop creation module')
             jsonschema.validate(request.data, SHOP_SCHEMA)
             shop = Shop.objects.filter(is_active=TRUE, building_no=request.data['building_no'],
                                        street_name=request.data['street_name'], locality=request.data['locality'],
@@ -47,26 +45,26 @@ class ShopViewSet(ModelViewSet):
             if shop:
                 logger.error('A shop in this address already exists')
                 return JsonResponse({MESSAGE: 'A shop in this already exists'}, status=status.HTTP_400_BAD_REQUEST)
-
-            user = User.objects.get(id=request.data['user'], is_active=TRUE)
+            logger.info('finding user of the shop')
+            user = User.objects.get(is_active=TRUE, id=request.data['user'])
             if user:
+                logger.info(f'user found for the id {request.data["user"]}')
                 user_data = UserResponseSerializer(user)
                 if user_data.data['is_seller']:
+                    logger.info('user is found to be a seller')
                     shop_serializer = self.get_serializer(data=request.data)
                     shop_serializer.is_valid(raise_exception=TRUE)
                     shop = shop_serializer.save(created_by=user)
                     logger.info('shop successfully created')
                     shop_response = ShopResponseSerializer(shop)
                     return JsonResponse(shop_response.data, status=status.HTTP_201_CREATED)
-                else:
-                    return JsonResponse({MESSAGE: 'Register as a seller to add your shop'},
-                                        status=status.HTTP_400_BAD_REQUEST)
-            else:
-                logger.error(f'{USER_RESPONSE} {request.data["user"]}')
-                return custom_error_response(USER, f'{USER_RESPONSE} {request.data["user"]}', 400)
+                return JsonResponse({MESSAGE: 'Register as a seller to add your shop'},
+                                    status=status.HTTP_400_BAD_REQUEST)
+            logger.error(f'{USER_RESPONSE} {request.data["user"]}')
+            return custom_error_response(USER, f'{USER_RESPONSE} {request.data["user"]}', 400)
 
         except jsonschema.exceptions.ValidationError as ex:
-            title = re.findall("'([^']*)'", ex.message)
+            title = re.findall(ERROR_PATTERN, ex.message)
             logger.error(f'Failed to validate the schema')
             return custom_error_response(title[0], ex.message, 400)
         except User.DoesNotExist:
@@ -79,6 +77,10 @@ class ShopViewSet(ModelViewSet):
         except ValueError as ex:
             logger.error(f'Invalid value for the field pk {request.headers.get("user-id")}')
             return JsonResponse({MESSAGE: ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(SHOP, ex.args[0], 400)
 
     def update(self, request, *args, **kwargs):
         """
@@ -102,12 +104,12 @@ class ShopViewSet(ModelViewSet):
             else:
                 logger.error(f'{USER_RESPONSE} {updated_by}')
                 return custom_error_response(USER, f'{USER_RESPONSE} {updated_by}', 400)
-        except Shop.DoesNotExist as ex:
+        except Shop.DoesNotExist:
             logger.error(f'{SHOP_RESPONSE} {request.headers.get("id")}')
             return custom_error_response(SHOP, f'{SHOP_RESPONSE} {request.headers.get("id")}', 400)
         except ValueError as ex:
             logger.error(f'Invalid value for the field pk {request.headers.get("id")}')
-            title = re.findall("'([^']*)'", ex.args[0])
+            title = re.findall(ERROR_PATTERN, ex.args[0])
             return custom_error_response(title[0], ex.args[0], 400)
         except Exception as ex:
             logger.error(ex.args[0])
@@ -128,9 +130,8 @@ class ShopViewSet(ModelViewSet):
             if shops:
                 shop_serializer = ShopResponseSerializer(shops, many=TRUE)
                 return JsonResponse({SHOP: shop_serializer.data}, status=status.HTTP_200_OK)
-            else:
-                logger.error(SHOP_LIST_RESPONSE)
-                return custom_error_response(SHOP, SHOP_LIST_RESPONSE, 400)
+            logger.error(SHOP_LIST_RESPONSE)
+            return JsonResponse({SHOP: SHOP_LIST_RESPONSE}, status=status.HTTP_200_OK)
         except Exception as ex:
             logger.error(ex.args)
             return custom_error_response(SHOP, ex.args[0], 400)
@@ -147,46 +148,54 @@ class ShopViewSet(ModelViewSet):
         shop_id = kwargs.get('pk')
         try:
             logger.info(f'finding the shop object for the id ')
-            data = Shop.objects.get(is_active=TRUE, id=shop_id)
-            logger.info('shop data retrieved')
-            shop_serializer = ShopResponseSerializer(data)
-            return JsonResponse(shop_serializer.data, status=status.HTTP_200_OK)
-
-        except Shop.DoesNotExist:
-            logger.error(f'{SHOP_RESPONSE} {shop_id}')
-            return custom_error_response(SHOP, f'{SHOP_RESPONSE} {shop_id}', 400)
+            shop = Shop.objects.filter(is_active=TRUE, id=shop_id)
+            if shop:
+                logger.info('shop data retrieved')
+                shop_serializer = ShopResponseSerializer(shop[0])
+                return JsonResponse(shop_serializer.data, status=status.HTTP_200_OK)
+            logger.info(f'No shop found for id {shop_id}')
+            return JsonResponse({MESSAGE: f'{SHOP_RESPONSE} {shop_id}'}, status=status.HTTP_200_OK)
 
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {shop_id}')
-            title = re.findall("'([^']*)'", ex.args[0])
+            title = re.findall(ERROR_PATTERN, ex.args[0])
             return custom_error_response(title[0], ex.args[0], 400)
+
+        except Exception as ex:
+            logger.error(ex.args[0])
+            return custom_error_response(USER, ex.args[0], 400)
 
 
 class ShopDetailsUpdateView(APIView):
-    logger.info('entering the module to soft delete the shop')
     """
      A view set that provides `update()` action for the shop model instance
     """
 
-    @staticmethod
-    def delete(request, pk=None):
+    def delete(self, request):
         """
         This method is used to delete the shop
         :param request: To delete the shop by changing its active status
-        :param pk: id of the shop
         :return:Response message of successfully deletion or error response
         """
         try:
-            shop = Shop.objects.get(id=pk)
-            if shop.is_active:
-                shop.is_active = FALSE
-                shop.save()
-                return JsonResponse({MESSAGE: 'shop successfully deleted'}, status=status.HTTP_200_OK)
-            return custom_error_response(SHOP, f'{SHOP_RESPONSE} {pk}', 400)
-        except Shop.DoesNotExist:
-            logger.error(f'{SHOP_RESPONSE} {pk}')
-            return custom_error_response(SHOP, f'{SHOP_RESPONSE} {pk}', 400)
+            logger.info('entering the module to soft delete the shop')
+            shop = Shop.objects.filter(is_active=TRUE, id=self.request.query_params.get('shop-id'))
+            if shop and shop[0].is_active:
+                logger.info('shop is found to be active')
+                shop[0].is_active = FALSE
+                updated_by = User.objects.filter(is_active=TRUE, id=request.headers.get('user'))
+                if updated_by:
+                    shop[0].updated_by = updated_by[0]
+                    shop[0].save()
+                    logger.info('shop successfully deleted')
+                    return JsonResponse({MESSAGE: 'shop successfully deleted'}, status=status.HTTP_200_OK)
+                logger.info(f'{USER_RESPONSE} {request.headers.get("user")}')
+                return JsonResponse({MESSAGE: f'{USER_RESPONSE} {request.headers.get("user")}'})
+            logger.info(f'{SHOP_RESPONSE} {self.request.query_params.get("shop-id")}')
+            return JsonResponse({SHOP: f'{SHOP_RESPONSE} {self.request.query_params.get("shop-id")}'},
+                                status=status.HTTP_200_OK)
+
         except ValueError as ex:
-            logger.error(f'Invalid value for the field pk {pk}')
-            title = re.findall("'([^']*)'", ex.args[0])
+            logger.error(f'Invalid value')
+            title = re.findall(ERROR_PATTERN, ex.args[0])
             return custom_error_response(title[0], ex.args[0], 400)

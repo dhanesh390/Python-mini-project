@@ -7,6 +7,6 @@ router = DefaultRouter()
 router.register('api/v1/shop', views.ShopViewSet)
 
 urlpatterns = [
-    path('api/v1/shop/update/<int:pk>', views.ShopDetailsUpdateView.as_view()),
+    path('api/v1/shop/update/', views.ShopDetailsUpdateView.as_view()),
     path('', include(router.urls))
 ]

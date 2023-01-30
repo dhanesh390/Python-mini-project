@@ -1,10 +1,10 @@
-from django.http import JsonResponse
 from http import HTTPStatus
 from typing import Any
 
-from rest_framework.views import exception_handler
-from rest_framework.views import Response
+from django.http import JsonResponse
 from rest_framework import status
+from rest_framework.views import Response
+from rest_framework.views import exception_handler
 
 
 def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Response:
@@ -37,9 +37,6 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Response:
 
 
 def custom_error_response(field: str, message: str, code) -> JsonResponse:
-    # field = ''
-    # message = 'Invalid data'
-    # code = status.HTTP_400_BAD_REQUEST
     error_response = {
         'error': {
             'field': '',
@@ -68,3 +65,31 @@ def custom_error_response(field: str, message: str, code) -> JsonResponse:
     response = error_response
 
     return JsonResponse({'error_details': response}, status=error_status)
+
+
+def custom_success_response(field: str, message: str, code) -> JsonResponse:
+    success_response = {
+        'result': {
+            'field': '',
+            'message': 'No data',
+            'status_code': status.HTTP_200_OK
+        }
+    }
+    success = success_response['error']
+    error_status = status.HTTP_400_BAD_REQUEST
+    if field:
+        success['field'] = field
+
+    if message:
+        success['message'] = message
+
+    elif code == 200:
+        success['status_code'] = 200
+        error_status = status.HTTP_200_OK
+    elif code == 201:
+        success['status_code'] = 201
+        error_status = status.HTTP_201_CREATED
+
+    success_response = success_response
+
+    return JsonResponse({'response_details': success_response}, status=error_status)

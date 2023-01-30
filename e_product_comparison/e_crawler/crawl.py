@@ -1,21 +1,28 @@
+import os
 import re
 from datetime import datetime
 
 import psycopg2
 import requests
-from urllib.parse import urlencode
+from schedule import repeat, run_pending, every
+from background_task import background
+from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 from bs4 import BeautifulSoup
-import os
+
 from crawl_logger import logger
-from e_product_comparison.e_crawler.crawler_constants import DIV, A, SPAN
+from e_product_comparison.e_crawler.crawler_constants import DIV, A, SPAN, HTML_PARSER, REPLACE, H_3, \
+    NAME_SPLIT_PATTERN, FLIPKART_ANDROID_URL, FLIPKART_IPHONE_URL, DATABASE, USER, PASSWORD, HOST, PORT, MRP, PERCENTAGE
+from e_product_comparison.e_crawler.crawler_constants import FLIPKART_URL, CROMA_URL, HREF, PRODUCT_SELECT_QUERY, \
+    OFFER_INSERT_QUERY, DATE_TIME_FORMAT, CROMA_ANDROID_URL, CROMA_IPHONE_URL, RUPEE, CURVE_BRACKETS, EMPTY_STRING
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'e_product_comparison.settings')
 
-connection = psycopg2.connect(database='product_e',
-                              user='postgres',
-                              password='dhanesh@22',
-                              host='localhost',
-                              port='5432'
+connection = psycopg2.connect(database=DATABASE,
+                              user=USER,
+                              password=PASSWORD,
+                              host=HOST,
+                              port=PORT
                               )
 
 
@@ -24,10 +31,10 @@ def crawl_flipkart(start_url):
     continue_crawling = True
     while continue_crawling:
         try:
-            url = start_url.replace('%s', str(count))
+            url = start_url.replace(REPLACE, str(count))
             print('1: ', url)
             response = requests.get(url)
-            soup = BeautifulSoup(response.content, 'html.parser')
+            soup = BeautifulSoup(response.content, HTML_PARSER)
 
             product_titles = soup.find_all(DIV, class_='_4rR01T')
             product_price = soup.find_all(DIV, class_='_3I9_wc _27UcVY')
@@ -35,105 +42,103 @@ def crawl_flipkart(start_url):
             product_offer_price = soup.find_all(DIV, class_='_30jeq3 _1_WHN1')
             product_data = soup.find_all(A, class_='_1fQZEK')
             next_page = soup.find(DIV, class_='_2MImiq')
-            # _next = soup.find_all(A, class_='ge-49M')
-            # _page = soup.find_all(A, class_='_1LKTO3')
-            current_page = next_page.find(SPAN).text.split()[1].replace(',', '')
-            final_page = next_page.find(SPAN).text.split()[3].replace(',', '')
+            current_page = next_page.find(SPAN).text.split()[1].replace(',', EMPTY_STRING)
+            final_page = next_page.find(SPAN).text.split()[3].replace(',', EMPTY_STRING)
             if int(current_page) < int(final_page):
                 count += 1
             elif int(current_page) >= int(final_page):
                 continue_crawling = False
         except AttributeError as ex:
-            logger.error(f'Attribute error occurred as {ex}')
+            logger.error(f'{ex} as occurred ')
             continue_crawling = False
-            print('scraping completed due to attributre error')
         else:
             for data in zip(product_titles, product_price, product_offer, product_offer_price, product_data):
-                specifications = re.findall("\(.*?\)", data[0].text)
-                print('specifications: ', specifications)
-                print('1: ', specifications[0])
-                color = specifications[0].replace('(', '').replace(')', '').split(',')
-                print('2: ', type(color))
-                if len(color) > 1:
-                    print('3: ', color[0])
-                    print('4: ', color[1])
-                else:
-                    print('3: ', color[0])
-                name = re.sub("\(.*?\)", "()", data[0].text)
-                product_name = name.replace('()', '').rstrip(' ')
-                original_price = data[1].text.replace('₹', '').replace(',', '')
-                offer_percentage = data[2].text.replace('off', '').replace('%', '')
-                vendor_price = data[3].text.replace('₹', '').replace(',', '')
-                product_url = 'https://www.flipkart.com' + data[4].get("href")
+                specifications = re.findall(NAME_SPLIT_PATTERN, data[0].text)
+                color = ''
+                storage = ''
+                if specifications:
+                    specification = specifications[0].replace('(', EMPTY_STRING).replace(')', EMPTY_STRING).split(',')
+                    if len(specification) > 1:
+                        color = specification[0].upper()
+                        storage = specification[1].lstrip(' ').replace(' ', EMPTY_STRING).upper()
+                    else:
+                        color = specification[0].upper()
+                name = re.sub(NAME_SPLIT_PATTERN, CURVE_BRACKETS, data[0].text)
+                product_name = name.replace(CURVE_BRACKETS, EMPTY_STRING).rstrip(' ')
+                original_price = data[1].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING)
+                offer_percentage = data[2].text.replace('off', '').replace(PERCENTAGE, EMPTY_STRING)
+                vendor_price = data[3].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING)
+                product_url = FLIPKART_URL + data[4].get(HREF)
 
                 create_offers(shop_id=1, product_name=product_name.upper(), original_price=original_price,
                               offer_percentage=offer_percentage,
-                              vendor_price=vendor_price, product_url=product_url)
+                              vendor_price=vendor_price, product_url=product_url, color=color, storage=storage)
 
 
 def crawl_e_websites(start_url):
-    urls = [start_url.replace('%s', str(page)) for page in range(1, 3)]
+    urls = [start_url.replace(REPLACE, str(page)) for page in range(1, 3)]
 
     for url in urls:
         print('url: ', url)
         response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        product_titles = soup.find_all('h3', class_='product-title plp-prod-title')
+        soup = BeautifulSoup(response.content, HTML_PARSER)
+        product_titles = soup.find_all(H_3, class_='product-title plp-prod-title')
         product_offer_price = soup.find_all(SPAN, attrs={'data-testid': 'new-price'})
         product_offer = soup.find_all(SPAN, class_='discount discount-mob-plp')
         product_price = soup.find_all(SPAN, attrs={'data-testid': 'old-price'})
         product_data = soup.find_all(DIV, class_='product-img')
 
         for data in zip(product_titles, product_price, product_offer, product_offer_price, product_data):
-            name = re.sub("\(.*?\)", "()", data[0].text)
-            name = name.replace('()', '').rstrip(' ')
+            specifications = re.findall(NAME_SPLIT_PATTERN, data[0].text)
+            specification = specifications[0].replace('(', EMPTY_STRING).replace(')', EMPTY_STRING).split(',')
+            color = EMPTY_STRING
+            storage = EMPTY_STRING
+            if len(specification) > 1:
+                color = specification[1].lstrip(' ').upper()
+                storage = specification[0].upper()
+            else:
+                color = specification[1].upper()
+            name = re.sub(NAME_SPLIT_PATTERN, CURVE_BRACKETS, data[0].text)
+            name = name.replace(CURVE_BRACKETS, EMPTY_STRING).rstrip(' ')
             create_offers(shop_id=3, product_name=name.upper(),
-                          original_price=data[1].text.replace('₹', '').replace(',', '').replace('MRP:', ''),
-                          offer_percentage=data[2].text.replace('Off', '').replace('%', ''),
-                          vendor_price=data[3].text.replace('₹', '').replace(',', '').replace('MRP:', ''),
-                          product_url='https://www.croma.com' + data[4].next.get('href'))
+                          original_price=data[1].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING).replace(MRP, EMPTY_STRING),
+                          offer_percentage=data[2].text.replace('Off', EMPTY_STRING).replace(PERCENTAGE, EMPTY_STRING),
+                          vendor_price=data[3].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING).replace(MRP, EMPTY_STRING),
+                          product_url=CROMA_URL + data[4].next.get(HREF), color=color, storage=storage)
 
 
-def create_offers(shop_id, product_name, original_price, offer_percentage, vendor_price, product_url):
+def create_offers(shop_id, product_name, original_price, offer_percentage, vendor_price, product_url, color, storage):
     with connection.cursor() as cursor:
-        qry = "SELECT id, name FROM product_product WHERE name like (%s);"
-        print('name: ', product_name)
-        cursor.execute(qry, (product_name,))
+        logger.info('connection established')
+        cursor.execute(PRODUCT_SELECT_QUERY, (product_name, color, storage))
         product = cursor.fetchone()
-        print('product: ', product)
         if product is not None:
-            print('into query: ', product[1])
-            query = '''INSERT into offer_offer(product_id, shop_id, actual_price, offer_percentage,
-                    vendor_price, product_url, is_active, created_on,
-                     updated_on) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);'''
-            values = (product[0], shop_id, original_price, offer_percentage, vendor_price, product_url, True,
-                      datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                      datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-                      )
-            cursor.execute(query, values)
-            connection.commit()
+            logger.info('matching product found')
+            if product[2] == color and product[3] == storage:
+                logger.info('product matching the specification found')
+                query = OFFER_INSERT_QUERY
+                values = (product[0], shop_id, original_price, offer_percentage, vendor_price, product_url, True,
+                          datetime.now().strftime(DATE_TIME_FORMAT),
+                          datetime.now().strftime(DATE_TIME_FORMAT)
+                          )
+                cursor.execute(query, values)
+                connection.commit()
+                logger.info('offer successfully created')
+            else:
+                pass
 
         else:
             pass
 
 
-if __name__ == "__main__":
-    is_continue = True
-    while is_continue:
-        user_choice = int(input('Enter 1 to scrawl e_crawler\nEnter 2 to scrawl amazon\nEnter 3 to scrawl croma: '))
-        match user_choice:
-            case 1:
-                print('Crawling flipkart for iphones')
-                # crawl_flipkart('https://www.flipkart.com/search?q=iphone+mobile&page=%s')
-                # print('crawling flipkart for android phones')
-                crawl_flipkart('https://www.flipkart.com/search?q=android+mobile&page=%s')
-                # print('crawling electronics')
+@repeat(every().day.at('17:25'))
+def my_scrape():
+    crawl_flipkart(FLIPKART_IPHONE_URL)
+    crawl_flipkart(FLIPKART_ANDROID_URL)
+    crawl_e_websites(CROMA_IPHONE_URL)
+    crawl_e_websites(CROMA_ANDROID_URL)
 
-            case 2:
-                print('start scraping amazon')
-                crawl_e_websites('https://www.amazon.in/s?i=electronics&rh=n%3A1389401031&fs=true&page=%s')
 
-            case 3:
-                print('start crawling crome')
-                crawl_e_websites('https://www.croma.com/phones-wearables/mobile-phones/iphones/c/97')
+while True:
+    run_pending()
+

@@ -43,13 +43,9 @@ INSTALLED_APPS = [
     'shop',
     'product',
     'user',
-    'e_crawler'
+    'e_crawler',
 ]
 
-CRON_CLASSES = [
-    "e_crawler.cron.MyCronJob",
-    # ...
-]
 
 SILENCED_SYSTEM_CHECKS = ['fields.E300', 'fields.E307']
 
@@ -83,7 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'e_product_comparison.wsgi.application'
 
-
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 

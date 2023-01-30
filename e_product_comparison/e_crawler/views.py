@@ -1,11 +1,11 @@
+import os
 import re
 from datetime import datetime
 
 import psycopg2
 import requests
-from urllib.parse import urlencode
 from bs4 import BeautifulSoup
-import os
+
 from crawl_logger import logger
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'e_product_comparison.settings')

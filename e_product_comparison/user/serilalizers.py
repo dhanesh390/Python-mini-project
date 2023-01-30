@@ -6,33 +6,29 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import ValidationError
 
 from .models import User
+from .user_constants import NAME_PATTERN, CONTACT_PATTERN
 from .user_logger import logger
-from e_product_comparison.myconstants import NAME_PATTERN
-from e_product_comparison.myconstants import CONTACT_PATTERN
 
 
 class UserSerializer(ModelSerializer):
     """ This class is implemented to serialize the user data"""
 
     def validate(self, data):
-        logger.info('Entering the user serializer validation ')
         """
         This method is used to validate the data of the user object
         :param data: user instance data object
         :return: validated data of the user object
         """
-
+        logger.info('Entering the user serializer validation ')
         if not re.match(NAME_PATTERN, data['first_name']):
             logger.error(f'Invalid first name {data["first_name"]}')
             raise ValidationError(f'Invalid first name {data["first_name"]}, Enter a valid name')
         if not re.match(NAME_PATTERN, data['last_name']):
             logger.error(f'Invalid last name {data["last_name"]}')
             raise ValidationError(f'Invalid last name {data["last_name"]}, Enter a valid name')
-        # if User.objects.get(is_active=True, username=data['username']):
-        #     raise ValidationError(f'user already exists{data["username"]}')
         if len(data['username']) < 6:
             raise ValidationError('username should be more than 6 characters')
-        if not re.match(CONTACT_PATTERN, data['contact_number']):
+        if len(data['contact_number']) != 10 and not re.match(CONTACT_PATTERN, data['contact_number']):
             logger.error(f'Invalid contact number {data["contact_number"]}')
             raise ValidationError(f'Invalid contact number {data["contact_number"]}, Enter a valid contact number')
 
