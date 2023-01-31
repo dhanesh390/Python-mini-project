@@ -20,25 +20,9 @@ PRODUCT_SCHEMA = {
             'required': ['color', 'storage']
         }
     },
-    'required': ['name', 'description', 'category_type', 'specification']
+    'required': ['name', 'description', 'category_type', 'specification'],
+    'additionalProperties': False
 }
 
 
-# PRODUCT_SCHEMA = {
-#     'name': 'product',
-#     'properties': {
-#         'name': {'type': 'string'},
-#         'descriptions': {'type': 'string'},
-#         'category': {'enum': ['mobile', 'laptop', 'tv']},
-#         'specifications': {
-#             'name': 'specifications',
-#             'properties': {
-#                 'color': {'type': 'string'},
-#                 'storage': {'type': 'string'}
-#             },
-#             'required': ['color', 'storage']
-#         }
-#     },
-#     'required': ['name', 'descriptions', 'category', 'specifications']
-# }
 

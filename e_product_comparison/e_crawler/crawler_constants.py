@@ -22,6 +22,8 @@ HREF = "href"
 PRODUCT_SELECT_QUERY = "SELECT id, name, specification->>'color' AS color, specification->>'storage' AS storage FROM " \
                         "product_product WHERE name = (%s) AND specification->>'color' = (%s) AND " \
                         "specification->>'storage' = (%s)"
+OFFER_SELECT_QUERY = "SELECT * from offer_offer WHERE product_id = (%s) AND shop_id = (%s) AND " \
+                                 "actual_price = (%s) AND offer_percentage = (%s) AND vendor_price = (%s)"
 OFFER_INSERT_QUERY = '''INSERT into offer_offer(product_id, shop_id, actual_price, offer_percentage,
                         vendor_price, product_url, is_active, created_on,
                          updated_on) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);'''

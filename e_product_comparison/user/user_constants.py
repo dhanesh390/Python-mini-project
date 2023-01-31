@@ -18,5 +18,7 @@ USER_SCHEMA = {
         'user_role': {'type': 'string'},
         'is_seller': {'enum': [True, False]}
     },
-    'required': ['first_name', 'last_name', 'username', 'password', 'contact_number', 'email', 'user_role', 'is_seller']
+    'required': ['first_name', 'last_name', 'username', 'password', 'contact_number', 'email', 'user_role',
+                 'is_seller'],
+    'additionalProperties': False
 }

@@ -13,7 +13,7 @@ from user.models import User
 
 from .models import Offer
 from .offer_constants import TRUE, FALSE, MESSAGE, OFFER, OFFER_RESPONSE, OFFER_LIST_RESPONSE, COLOR, STORAGE, \
-    SPECIFICATION, ID, NAME, OFFER_SCHEMA, VALUE_ERROR_PATTERN, USER_RESPONSE, PRODUCT, PRODUCT_RESPONSE,\
+    SPECIFICATION, ID, NAME, OFFER_SCHEMA, VALUE_ERROR_PATTERN, USER_RESPONSE, PRODUCT, PRODUCT_RESPONSE, \
     PRODUCT_LIST_RESPONSE, SHOP, SHOP_RESPONSE
 from .offer_logger import logger
 from .serializers import OfferSerializer, OfferResponseSerializer
@@ -38,13 +38,12 @@ class OfferViewSet(ModelViewSet):
 
         try:
             jsonschema.validate(request.data, OFFER_SCHEMA)
-            print('data: ', request.data)
             offer = Offer.objects.filter(is_active=TRUE, product=request.data['product'], shop=request.data['shop'],
                                          actual_price=request.data['actual_price'],
                                          offer_percentage=request.data['offer_percentage'])
             if offer:
                 logger.error('this offer already exists')
-                return JsonResponse({OFFER: 'This offer already exists'},status=status.HTTP_200_OK)
+                return JsonResponse({OFFER: 'This offer already exists'}, status=status.HTTP_200_OK)
 
             logger.info('entering the offer creation module')
             product = Product.objects.filter(is_active=TRUE, id=request.data[PRODUCT])
@@ -53,20 +52,29 @@ class OfferViewSet(ModelViewSet):
                 shop = Shop.objects.filter(is_active=TRUE, id=request.data[SHOP])
                 if shop:
                     logger.info('shop is available')
-                    user = User.objects.filter(is_active=TRUE, id=request.headers.get('user-id'))
-                    print('user: ', user)
+                    user = User.objects.get(is_active=TRUE, id=request.headers.get('user-id'))
                     if user:
-                        offer_serializer = self.get_serializer(data=request.data)
-                        print('offer: ', offer_serializer)
                         logger.info('user is found')
+                        offer_serializer = self.get_serializer(data=request.data)
+                        logger.info('offer is serialized')
                         offer_serializer.is_valid(raise_exception=TRUE)
+                        logger.info('serialized offer is valid')
                         offer = offer_serializer.save(created_by=user)
+                        logger.info('setting the created by')
                         offer_response = OfferResponseSerializer(offer)
                         logger.info('offer successfully created')
                         return JsonResponse(offer_response.data, status=status.HTTP_201_CREATED)
-                    return custom_error_response(User, f'{USER_RESPONSE} {request.headers.get("user-id")}', 400)
+                    logger.info(f'{USER_RESPONSE} {request.headers.get("user-id")}')
+                    return custom_error_response('user', f'{USER_RESPONSE} {request.headers.get("user-id")}', 400)
+                logger.info(f'{SHOP_RESPONSE} {request.data[SHOP]}')
                 return custom_error_response(SHOP, f'{SHOP_RESPONSE} {request.data[SHOP]}', 400)
+            logger.info(f'{PRODUCT_RESPONSE} {request.data[PRODUCT]}')
             return custom_error_response(PRODUCT, f'{PRODUCT_RESPONSE} {request.data[PRODUCT]}', 400)
+
+        except User.DoesNotExist:
+            logger.error(f'User does not exist for the id {request.headers.get("user-id")}')
+            return JsonResponse({'user': f'User does not exist for the id {request.headers.get("user-id")}'},
+                                status=status.HTTP_400_BAD_REQUEST)
         except ValueError as ex:
             logger.error(f'Invalid value for the key id {request.headers.get("user-id")}')
             title = re.findall(VALUE_ERROR_PATTERN, ex.args[0])
@@ -112,7 +120,6 @@ class OfferUpdateViewSet(APIView):
     """
      A view set that provides `update()` action for the offer model instance
     """
-
     def delete(self, request):
         """
         This method is used to delete the offer instance
@@ -150,7 +157,6 @@ class ViewOffers(APIView):
     """
          A view set that provides `get()` action for the offer model instance
         """
-
     @staticmethod
     def get(request):
         if request.data:
@@ -160,15 +166,37 @@ class ViewOffers(APIView):
                     product = Product.objects.filter(id=request.data[ID], is_active=TRUE)
                     logger.info(f'product found for the id {request.data[ID]}')
 
-                elif NAME in request.data:
+                elif NAME and SPECIFICATION in request.data:
                     logger.info(f'finding the product of name {request.data[NAME]}')
                     if COLOR in request.data[SPECIFICATION] and STORAGE in request.data[SPECIFICATION]:
+                        logger.info('finding product with the given specification')
                         product = Product.objects.filter(name=request.data[NAME].upper(), specification__contains={
                             COLOR: request.data[SPECIFICATION][COLOR].upper(),
                             STORAGE: request.data[SPECIFICATION][STORAGE].upper()}, is_active=TRUE)
                         logger.info(f'product found for the name {request.data[NAME]}')
-                    elif COLOR not in request.data[SPECIFICATION] or STORAGE not in request.data[SPECIFICATION]:
-                        return custom_error_response(SPECIFICATION, 'color or storage in specification is missing', 400)
+                    elif COLOR in request.data[SPECIFICATION] and STORAGE not in request.data[SPECIFICATION]:
+                        products = Product.objects.filter(name=request.data[NAME].upper(), specification__contains={
+                            COLOR: request.data[SPECIFICATION][COLOR].upper()}, is_active=TRUE)
+                        if products:
+                            logger.info('all products found')
+                            products_response = ProductResponseSerializer(products, many=TRUE)
+                            return JsonResponse({PRODUCT: products_response.data}, status=status.HTTP_200_OK)
+                        return JsonResponse({PRODUCT: PRODUCT_LIST_RESPONSE}, status=status.HTTP_200_OK)
+                    elif STORAGE in request.data[SPECIFICATION] and COLOR not in request.data[SPECIFICATION]:
+                        products = Product.objects.filter(name=request.data[NAME].upper(), specification__contains={
+                            STORAGE: request.data[SPECIFICATION][STORAGE].upper()}, is_active=TRUE)
+                        if products:
+                            logger.info('all products found')
+                            products_response = ProductResponseSerializer(products, many=TRUE)
+                            return JsonResponse({PRODUCT: products_response.data}, status=status.HTTP_200_OK)
+                        return JsonResponse({PRODUCT: PRODUCT_LIST_RESPONSE}, status=status.HTTP_200_OK)
+                elif NAME in request.data and SPECIFICATION not in request.data[NAME]:
+                    products = Product.objects.filter(name__contains=request.data[NAME].upper(), is_active=TRUE)
+                    if products:
+                        logger.info('all products found')
+                        products_response = ProductResponseSerializer(products, many=TRUE)
+                        return JsonResponse({PRODUCT: products_response.data}, status=status.HTTP_200_OK)
+                    return JsonResponse({PRODUCT: PRODUCT_LIST_RESPONSE}, status=status.HTTP_200_OK)
 
                 if product:
                     product_serializer = ProductResponseSerializer(product[0])

@@ -9,14 +9,6 @@ from .product_logger import logger
 class ProductSerializer(ModelSerializer):
     """ This class is implemented to serialize and deserialize the product object"""
     logger.info('into the product serializer module')
-    # name = serializers.CharField(source='product_name')
-    # description = serializers.CharField(source='descriptions')
-    # category_type = serializers.CharField(source='category')
-    # specification = serializers.JSONField(source='specifications')
-    #
-    # class Meta:
-    #     model = Product
-    #     fields = ['name', 'description', 'category_type', 'specification']
 
     class Meta:
         model = Product

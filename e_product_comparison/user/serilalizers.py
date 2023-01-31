@@ -28,7 +28,7 @@ class UserSerializer(ModelSerializer):
             raise ValidationError(f'Invalid last name {data["last_name"]}, Enter a valid name')
         if len(data['username']) < 6:
             raise ValidationError('username should be more than 6 characters')
-        if len(data['contact_number']) != 10 and not re.match(CONTACT_PATTERN, data['contact_number']):
+        if len(data['contact_number']) != 10 or not re.match(CONTACT_PATTERN, data['contact_number']):
             logger.error(f'Invalid contact number {data["contact_number"]}')
             raise ValidationError(f'Invalid contact number {data["contact_number"]}, Enter a valid contact number')
 

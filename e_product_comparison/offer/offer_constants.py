@@ -28,20 +28,10 @@ OFFER_SCHEMA = {
         'offer_percentage': {'type': 'number'},
         'vendor_price': {'type': 'number'}
     },
-    'required': ['product', 'shop', 'actual_price', 'offer_percentage', 'vendor_price']
+    'required': ['product', 'shop', 'actual_price', 'offer_percentage', 'vendor_price'],
+    'additionalProperties': False
 }
 
-# OFFER_SCHEMA = {
-#     'name': 'offer',
-#     'properties': {
-#         'product': {'type': 'number'},
-#         'shop': {'type': 'number'},
-#         'original_price': {'type': 'number'},
-#         'discount': {'type': 'number'},
-#         'discount_price': {'type': 'number'}
-#     },
-#     'required': ['product', 'shop', 'original_price', 'discount', 'discount_price']
-# }
 
 PRODUCT_SEARCH_SCHEMA = {
     'name': 'product',
@@ -55,5 +45,6 @@ PRODUCT_SEARCH_SCHEMA = {
             'required': ['color', 'storage']
         }
     },
-    'required': ['name', 'specification']
+    'required': ['name', 'specification'],
+    'additionalProperties': False
 }

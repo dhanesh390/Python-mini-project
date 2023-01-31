@@ -19,5 +19,6 @@ SHOP_SCHEMA = {
         'pincode': {'type': 'string'}
     },
     'required': ['name', 'contact_number', 'building_no', 'street_name', 'locality', 'district', 'state',
-                 'country', 'pincode']
+                 'country', 'pincode'],
+    'additionalProperties': False
 }

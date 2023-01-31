@@ -5,16 +5,14 @@ from datetime import datetime
 import psycopg2
 import requests
 from schedule import repeat, run_pending, every
-from background_task import background
-from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.triggers.interval import IntervalTrigger
 from bs4 import BeautifulSoup
 
 from crawl_logger import logger
 from e_product_comparison.e_crawler.crawler_constants import DIV, A, SPAN, HTML_PARSER, REPLACE, H_3, \
     NAME_SPLIT_PATTERN, FLIPKART_ANDROID_URL, FLIPKART_IPHONE_URL, DATABASE, USER, PASSWORD, HOST, PORT, MRP, PERCENTAGE
 from e_product_comparison.e_crawler.crawler_constants import FLIPKART_URL, CROMA_URL, HREF, PRODUCT_SELECT_QUERY, \
-    OFFER_INSERT_QUERY, DATE_TIME_FORMAT, CROMA_ANDROID_URL, CROMA_IPHONE_URL, RUPEE, CURVE_BRACKETS, EMPTY_STRING
+    OFFER_INSERT_QUERY, DATE_TIME_FORMAT, CROMA_ANDROID_URL, CROMA_IPHONE_URL, RUPEE, CURVE_BRACKETS, EMPTY_STRING,\
+    OFFER_SELECT_QUERY
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'e_product_comparison.settings')
 
@@ -101,9 +99,11 @@ def crawl_e_websites(start_url):
             name = re.sub(NAME_SPLIT_PATTERN, CURVE_BRACKETS, data[0].text)
             name = name.replace(CURVE_BRACKETS, EMPTY_STRING).rstrip(' ')
             create_offers(shop_id=3, product_name=name.upper(),
-                          original_price=data[1].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING).replace(MRP, EMPTY_STRING),
+                          original_price=data[1].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING).replace(
+                              MRP, EMPTY_STRING),
                           offer_percentage=data[2].text.replace('Off', EMPTY_STRING).replace(PERCENTAGE, EMPTY_STRING),
-                          vendor_price=data[3].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING).replace(MRP, EMPTY_STRING),
+                          vendor_price=data[3].text.replace(RUPEE, EMPTY_STRING).replace(',', EMPTY_STRING).replace(MRP,
+                                                                                                                    EMPTY_STRING),
                           product_url=CROMA_URL + data[4].next.get(HREF), color=color, storage=storage)
 
 
@@ -114,24 +114,25 @@ def create_offers(shop_id, product_name, original_price, offer_percentage, vendo
         product = cursor.fetchone()
         if product is not None:
             logger.info('matching product found')
-            if product[2] == color and product[3] == storage:
+            cursor.execute(OFFER_SELECT_QUERY, (product[0], shop_id, original_price, offer_percentage, vendor_price))
+            offer = cursor.fetchone()
+            if offer:
+                logger.info('existing offer found')
+                pass
+            else:
                 logger.info('product matching the specification found')
-                query = OFFER_INSERT_QUERY
                 values = (product[0], shop_id, original_price, offer_percentage, vendor_price, product_url, True,
-                          datetime.now().strftime(DATE_TIME_FORMAT),
-                          datetime.now().strftime(DATE_TIME_FORMAT)
+                          datetime.now().strftime(DATE_TIME_FORMAT), datetime.now().strftime(DATE_TIME_FORMAT)
                           )
-                cursor.execute(query, values)
+                cursor.execute(OFFER_INSERT_QUERY, values)
                 connection.commit()
                 logger.info('offer successfully created')
-            else:
-                pass
 
         else:
             pass
 
 
-@repeat(every().day.at('17:25'))
+@repeat(every().day.at('18:48'))
 def my_scrape():
     crawl_flipkart(FLIPKART_IPHONE_URL)
     crawl_flipkart(FLIPKART_ANDROID_URL)
@@ -142,3 +143,23 @@ def my_scrape():
 while True:
     run_pending()
 
+
+# if product[2] == color and product[3] == storage:
+            # check_offer = is_offer_already_exists(product[0], shop_id, original_price, offer_percentage,
+            #                                       vendor_price, product_url)
+            # if check_offer:
+            #     pass
+            # offer_select_query = "SELECT * from offer_offer WHERE product_id = (%s) AND shop_id = (%s) AND " \
+            #                      "actual_price = (%s) AND offer_percentage = (%s) AND vendor_price = (%s)"
+
+
+# def is_offer_already_exists(shop_id, product_id, original_price, offer_percentage, vendor_price, product_url):
+#     with connection.cursor() as cursor:
+#         offer_select_query = "SELECT * from offer_offer WHERE product_id = (%s) AND shop_id = (%s) AND actual_price = " \
+#                              "(%s) AND offer_percentage = (%s) AND vendor_price = (%s) AND product_url = (%s)"
+#         cursor.execute(offer_select_query, (product_id, shop_id, original_price, offer_percentage, vendor_price, product_url))
+#         print('a: ', cursor.query)
+#         offer = cursor.fetchone()
+#         if offer:
+#             return True
+#         return False

@@ -12726,3 +12726,562 @@ Original exception text was: 'OfferSerializer' object has no attribute 'product'
 2023-01-30 19:01:17,225 - offer.offer_logger - INFO - Product is available 
 2023-01-30 19:01:17,229 - offer.offer_logger - INFO - shop is available
 2023-01-30 19:01:17,235 - offer.offer_logger - ERROR - Object of type ModelBase is not JSON serializable
+2023-01-31 12:41:58,855 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:41:58,855 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:41:58,892 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:41:58,893 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:41:58,903 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:41:58,925 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:41:58,925 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:41:58,942 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:41:58,943 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:41:58,969 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:42:02,310 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:42:02,317 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:42:02,323 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:42:02,328 - offer.offer_logger - ERROR - Object of type ModelBase is not JSON serializable
+2023-01-31 12:42:48,533 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:42:48,533 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:42:48,542 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:42:48,543 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:42:48,545 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:42:48,559 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:42:48,561 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:42:48,575 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:42:48,576 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:42:48,583 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:43:33,538 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:43:33,538 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:43:33,543 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:43:33,543 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:43:33,544 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:43:33,548 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:43:33,548 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:43:33,550 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:43:33,551 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:43:33,555 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:43:36,638 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:43:36,642 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:43:36,646 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:43:36,655 - offer.offer_logger - ERROR - Object of type ModelBase is not JSON serializable
+2023-01-31 12:44:52,436 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:44:52,438 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:44:52,441 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:44:52,442 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:44:52,443 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:44:52,450 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:44:52,451 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:44:52,454 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:44:52,454 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:44:52,460 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:45:20,523 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:45:20,526 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:45:20,530 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:45:20,535 - offer.offer_logger - INFO - No user found for this id 12
+2023-01-31 12:45:20,536 - offer.offer_logger - ERROR - Object of type ModelBase is not JSON serializable
+2023-01-31 12:45:43,729 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:45:43,732 - offer.offer_logger - INFO - No product found for this id 12
+2023-01-31 12:46:09,502 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:46:09,502 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:46:09,508 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:46:09,509 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:46:09,510 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:46:09,518 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:46:09,519 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:46:09,522 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:46:09,522 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:46:09,525 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:46:11,515 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:46:11,518 - offer.offer_logger - INFO - No product found for this id 12
+2023-01-31 12:46:16,960 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:46:16,964 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:46:16,968 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:46:16,975 - offer.offer_logger - INFO - No user found for this id 12
+2023-01-31 12:46:24,641 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:46:24,644 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:46:24,648 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:46:24,653 - offer.offer_logger - INFO - user is found
+2023-01-31 12:46:24,656 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 12:46:24,656 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 12:47:28,356 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:47:28,357 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:47:28,361 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:47:28,361 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:47:28,362 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:47:28,370 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:47:28,371 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:47:28,376 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:47:28,376 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:47:28,384 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:47:30,175 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:47:30,179 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:47:30,183 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:47:30,191 - offer.offer_logger - INFO - user is found
+2023-01-31 12:47:30,196 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 12:47:30,196 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 12:47:49,559 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:47:49,559 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:47:49,564 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:47:49,564 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:47:49,565 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:47:49,573 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:47:49,574 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:47:49,576 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:47:49,577 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:47:49,581 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:47:51,775 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:47:51,778 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:47:51,782 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:47:51,788 - offer.offer_logger - INFO - user is found
+2023-01-31 12:47:51,793 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 12:47:51,793 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 12:49:03,446 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:49:03,447 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:49:03,452 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:49:03,453 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:49:03,454 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:49:03,462 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:49:03,462 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:49:03,465 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:49:03,465 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:49:03,469 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:49:09,336 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:49:09,339 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:49:09,343 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:49:09,349 - offer.offer_logger - INFO - user is found
+2023-01-31 12:49:09,352 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 12:49:09,353 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 12:49:38,838 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:49:38,839 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:49:38,844 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:49:38,844 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:49:38,846 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:49:38,853 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:49:38,853 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:49:38,856 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:49:38,856 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:49:38,860 - product.product_logger - INFO - entering the product view set module
+2023-01-31 12:49:40,685 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 12:49:40,688 - offer.offer_logger - INFO - Product is available 
+2023-01-31 12:49:40,694 - offer.offer_logger - INFO - shop is available
+2023-01-31 12:49:40,699 - offer.offer_logger - INFO - user is found
+2023-01-31 12:49:40,702 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 12:49:40,703 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 12:58:45,227 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 12:58:45,228 - user.user_logger - INFO - Into the user view set
+2023-01-31 12:58:45,232 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 12:58:45,232 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 12:58:45,233 - shop.shop_logger - INFO - into the shop module
+2023-01-31 12:58:45,241 - product.product_logger - INFO - into the product serializer module
+2023-01-31 12:58:45,241 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 12:58:45,244 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 12:58:45,244 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 12:58:45,247 - product.product_logger - INFO - entering the product view set module
+2023-01-31 13:02:42,581 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 13:02:42,581 - user.user_logger - INFO - Into the user view set
+2023-01-31 13:02:42,581 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 13:02:42,581 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 13:02:42,581 - shop.shop_logger - INFO - into the shop module
+2023-01-31 13:02:42,581 - product.product_logger - INFO - into the product serializer module
+2023-01-31 13:02:42,581 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 13:02:42,581 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 13:02:42,581 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 13:02:42,597 - product.product_logger - INFO - entering the product view set module
+2023-01-31 13:02:46,291 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 13:02:46,291 - offer.offer_logger - INFO - Product is available 
+2023-01-31 13:02:46,291 - offer.offer_logger - INFO - shop is available
+2023-01-31 13:02:46,306 - offer.offer_logger - INFO - user is found
+2023-01-31 13:02:46,306 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 13:02:46,306 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 13:03:15,835 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 13:03:15,835 - user.user_logger - INFO - Into the user view set
+2023-01-31 13:03:15,835 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 13:03:15,835 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 13:03:15,835 - shop.shop_logger - INFO - into the shop module
+2023-01-31 13:03:15,850 - product.product_logger - INFO - into the product serializer module
+2023-01-31 13:03:15,850 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 13:03:15,850 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 13:03:15,850 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 13:03:15,850 - product.product_logger - INFO - entering the product view set module
+2023-01-31 13:03:20,165 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 13:03:20,165 - offer.offer_logger - INFO - Product is available 
+2023-01-31 13:03:20,180 - offer.offer_logger - INFO - shop is available
+2023-01-31 13:03:20,180 - offer.offer_logger - INFO - user is found
+2023-01-31 13:03:20,180 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 13:03:20,180 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 14:25:31,053 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:25:31,053 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:25:31,069 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:25:31,069 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:25:31,069 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:25:31,081 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:25:31,081 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:25:31,087 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:25:31,087 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:25:31,091 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:25:32,642 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 14:25:32,646 - offer.offer_logger - INFO - Product is available 
+2023-01-31 14:25:32,650 - offer.offer_logger - INFO - shop is available
+2023-01-31 14:25:32,657 - offer.offer_logger - INFO - user is found
+2023-01-31 14:25:32,661 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 14:25:32,661 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 14:25:53,315 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:25:53,315 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:25:53,315 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:25:53,315 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:25:53,315 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:25:53,331 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:25:53,331 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:25:53,331 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:25:53,331 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:25:53,331 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:26:01,209 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:26:01,209 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:26:01,209 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:26:01,209 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:26:01,209 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:26:01,225 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:26:01,225 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:26:01,225 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:26:01,225 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:26:01,225 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:26:02,397 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 14:26:02,397 - offer.offer_logger - INFO - Product is available 
+2023-01-31 14:26:02,397 - offer.offer_logger - INFO - shop is available
+2023-01-31 14:26:02,413 - offer.offer_logger - INFO - user is found
+2023-01-31 14:26:02,413 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 14:26:02,413 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 14:29:35,623 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:29:35,623 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:29:35,623 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:29:35,623 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:29:35,623 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:29:35,639 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:29:35,639 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:29:35,639 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:29:35,639 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:29:35,639 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:29:36,705 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 14:29:36,709 - offer.offer_logger - INFO - Product is available 
+2023-01-31 14:29:36,713 - offer.offer_logger - INFO - shop is available
+2023-01-31 14:29:36,720 - offer.offer_logger - INFO - user is found
+2023-01-31 14:29:36,722 - offer.offer_logger - INFO - offer is serialized
+2023-01-31 14:29:36,724 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 14:29:36,724 - offer.offer_logger - INFO - serialized offer is valid
+2023-01-31 14:29:36,725 - offer.offer_logger - ERROR - Invalid value for the key id 2
+2023-01-31 14:30:56,872 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:30:56,872 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:30:56,872 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:30:56,888 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:30:56,888 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:30:56,888 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:30:56,888 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:30:56,888 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:30:56,888 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:30:56,888 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:31:21,225 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:31:21,225 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:31:21,241 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:31:21,241 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:31:21,241 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:31:21,241 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:31:21,241 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:31:21,257 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:31:21,257 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:31:21,257 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:31:22,317 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 14:31:22,317 - offer.offer_logger - INFO - Product is available 
+2023-01-31 14:31:22,317 - offer.offer_logger - INFO - shop is available
+2023-01-31 14:31:22,333 - offer.offer_logger - INFO - user is found
+2023-01-31 14:31:22,333 - offer.offer_logger - INFO - offer is serialized
+2023-01-31 14:31:22,333 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 14:31:22,333 - offer.offer_logger - INFO - serialized offer is valid
+2023-01-31 14:31:22,333 - offer.offer_logger - INFO - setting the created by
+2023-01-31 14:31:22,333 - offer.offer_logger - INFO - offer successfully created
+2023-01-31 14:31:29,206 - offer.offer_logger - ERROR - this offer already exists
+2023-01-31 14:31:55,465 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:31:55,465 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:31:55,481 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:31:55,481 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:31:55,481 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:31:55,481 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:31:55,481 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:31:55,481 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:31:55,481 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:31:55,496 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:32:01,860 - offer.offer_logger - ERROR - this offer already exists
+2023-01-31 14:32:08,528 - offer.offer_logger - ERROR - this offer already exists
+2023-01-31 14:32:26,970 - offer.offer_logger - INFO - entering the offer creation module
+2023-01-31 14:32:26,974 - offer.offer_logger - INFO - Product is available 
+2023-01-31 14:32:26,978 - offer.offer_logger - INFO - shop is available
+2023-01-31 14:32:26,983 - offer.offer_logger - ERROR - User does not exist for the id 12
+2023-01-31 14:42:25,861 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:42:25,861 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:42:25,861 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:42:25,861 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:42:25,861 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:42:25,877 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:42:25,877 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:42:25,877 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:42:25,877 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:42:25,877 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:42:34,789 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 14:42:45,086 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 14:42:45,132 - offer.offer_logger - INFO - all products found
+2023-01-31 14:44:03,877 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:44:03,877 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:44:03,877 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:44:03,877 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:44:03,877 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:44:03,955 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:44:03,955 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:44:03,955 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:44:03,955 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:44:03,955 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:44:10,608 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 14:44:31,970 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 14:44:44,481 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 14:44:44,481 - offer.offer_logger - INFO - product found for the name APPLE IPHONE 14
+2023-01-31 14:45:12,274 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 14:45:12,274 - offer.offer_logger - ERROR - specification
+2023-01-31 14:47:04,405 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:47:04,405 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:47:04,405 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:47:04,405 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:47:04,405 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:47:04,420 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:47:04,420 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:47:04,420 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:47:04,420 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:47:04,420 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:47:11,751 - offer.offer_logger - INFO - all products found
+2023-01-31 14:49:07,139 - product.product_logger - INFO - into the product creation module
+2023-01-31 14:49:07,294 - product.product_logger - INFO - creating a new product
+2023-01-31 14:49:07,299 - product.product_logger - INFO - user is found and is active
+2023-01-31 14:49:07,305 - product.product_logger - INFO - product successfully created
+2023-01-31 14:49:15,899 - offer.offer_logger - INFO - all products found
+2023-01-31 14:49:25,562 - offer.offer_logger - INFO - all products found
+2023-01-31 14:49:37,708 - offer.offer_logger - INFO - finding all the offers
+2023-01-31 14:49:37,764 - offer.offer_logger - INFO - all offers found
+2023-01-31 14:54:24,044 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:54:24,045 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:54:24,050 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:54:24,050 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:54:24,051 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:54:24,060 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:54:24,061 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:54:24,064 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:54:24,064 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:54:24,068 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:54:32,447 - offer.offer_logger - INFO - all products found
+2023-01-31 14:54:47,116 - offer.offer_logger - INFO - all products found
+2023-01-31 14:55:09,564 - offer.offer_logger - INFO - finding all the offers
+2023-01-31 14:55:09,615 - offer.offer_logger - INFO - all offers found
+2023-01-31 14:55:23,143 - offer.offer_logger - INFO - all products found
+2023-01-31 14:55:34,512 - offer.offer_logger - INFO - all products found
+2023-01-31 14:55:55,870 - offer.offer_logger - INFO - all products found
+2023-01-31 14:56:13,524 - offer.offer_logger - INFO - all products found
+2023-01-31 14:56:41,450 - offer.offer_logger - INFO - all products found
+2023-01-31 14:58:18,371 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 14:58:18,372 - user.user_logger - INFO - Into the user view set
+2023-01-31 14:58:18,376 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 14:58:18,376 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 14:58:18,377 - shop.shop_logger - INFO - into the shop module
+2023-01-31 14:58:18,386 - product.product_logger - INFO - into the product serializer module
+2023-01-31 14:58:18,386 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 14:58:18,389 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 14:58:18,389 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 14:58:18,392 - product.product_logger - INFO - entering the product view set module
+2023-01-31 14:58:19,977 - offer.offer_logger - INFO - all products found
+2023-01-31 14:58:29,599 - offer.offer_logger - INFO - all products found
+2023-01-31 14:58:35,126 - offer.offer_logger - INFO - all products found
+2023-01-31 15:00:20,868 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 15:00:20,868 - user.user_logger - INFO - Into the user view set
+2023-01-31 15:00:20,873 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 15:00:20,873 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 15:00:20,874 - shop.shop_logger - INFO - into the shop module
+2023-01-31 15:00:20,883 - product.product_logger - INFO - into the product serializer module
+2023-01-31 15:00:20,884 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 15:00:20,888 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 15:00:20,888 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 15:00:20,893 - product.product_logger - INFO - entering the product view set module
+2023-01-31 15:00:29,154 - offer.offer_logger - INFO - finding the product of id 4
+2023-01-31 15:00:29,155 - offer.offer_logger - INFO - product found for the id 4
+2023-01-31 15:00:47,129 - offer.offer_logger - INFO - all products found
+2023-01-31 15:02:30,586 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 15:02:30,587 - user.user_logger - INFO - Into the user view set
+2023-01-31 15:02:30,591 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 15:02:30,592 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 15:02:30,593 - shop.shop_logger - INFO - into the shop module
+2023-01-31 15:02:30,601 - product.product_logger - INFO - into the product serializer module
+2023-01-31 15:02:30,601 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 15:02:30,604 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 15:02:30,604 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 15:02:30,607 - product.product_logger - INFO - entering the product view set module
+2023-01-31 15:02:56,727 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 15:02:56,727 - user.user_logger - INFO - Into the user view set
+2023-01-31 15:02:56,734 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 15:02:56,734 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 15:02:56,735 - shop.shop_logger - INFO - into the shop module
+2023-01-31 15:02:56,743 - product.product_logger - INFO - into the product serializer module
+2023-01-31 15:02:56,743 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 15:02:56,748 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 15:02:56,748 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 15:02:56,753 - product.product_logger - INFO - entering the product view set module
+2023-01-31 15:02:58,345 - offer.offer_logger - INFO - all products found
+2023-01-31 15:03:34,008 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 15:03:34,008 - user.user_logger - INFO - Into the user view set
+2023-01-31 15:03:34,013 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 15:03:34,014 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 15:03:34,015 - shop.shop_logger - INFO - into the shop module
+2023-01-31 15:03:34,023 - product.product_logger - INFO - into the product serializer module
+2023-01-31 15:03:34,023 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 15:03:34,026 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 15:03:34,026 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 15:03:34,030 - product.product_logger - INFO - entering the product view set module
+2023-01-31 15:03:36,045 - offer.offer_logger - INFO - all products found
+2023-01-31 15:04:02,448 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 15:04:02,448 - user.user_logger - INFO - Into the user view set
+2023-01-31 15:04:02,453 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 15:04:02,453 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 15:04:02,455 - shop.shop_logger - INFO - into the shop module
+2023-01-31 15:04:02,462 - product.product_logger - INFO - into the product serializer module
+2023-01-31 15:04:02,462 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 15:04:02,465 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 15:04:02,466 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 15:04:02,469 - product.product_logger - INFO - entering the product view set module
+2023-01-31 15:04:04,279 - offer.offer_logger - INFO - all products found
+2023-01-31 15:04:46,465 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 15:04:46,465 - user.user_logger - INFO - Into the user view set
+2023-01-31 15:04:46,470 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 15:04:46,471 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 15:04:46,471 - shop.shop_logger - INFO - into the shop module
+2023-01-31 15:04:46,479 - product.product_logger - INFO - into the product serializer module
+2023-01-31 15:04:46,479 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 15:04:46,482 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 15:04:46,483 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 15:04:46,486 - product.product_logger - INFO - entering the product view set module
+2023-01-31 15:04:48,119 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 15:04:48,119 - offer.offer_logger - INFO - finding product with the given specification
+2023-01-31 15:04:48,120 - offer.offer_logger - INFO - product found for the name APPLE IPHONE 14
+2023-01-31 18:11:58,343 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 18:14:16,199 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 18:14:16,199 - user.user_logger - INFO - Into the user view set
+2023-01-31 18:14:16,206 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 18:14:16,207 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 18:14:16,208 - shop.shop_logger - INFO - into the shop module
+2023-01-31 18:14:16,219 - product.product_logger - INFO - into the product serializer module
+2023-01-31 18:14:16,219 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 18:14:16,222 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 18:14:16,223 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 18:14:16,227 - product.product_logger - INFO - entering the product view set module
+2023-01-31 18:31:00,208 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 18:31:00,209 - user.user_logger - INFO - Into the user view set
+2023-01-31 18:31:00,217 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 18:31:00,217 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 18:31:00,221 - shop.shop_logger - INFO - into the shop module
+2023-01-31 18:31:00,233 - product.product_logger - INFO - into the product serializer module
+2023-01-31 18:31:00,233 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 18:31:00,238 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 18:31:00,239 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 18:31:00,244 - product.product_logger - INFO - entering the product view set module
+2023-01-31 18:31:13,461 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 18:31:13,577 - offer.offer_logger - INFO - all products found
+2023-01-31 18:31:45,608 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 18:31:45,727 - offer.offer_logger - INFO - all products found
+2023-01-31 18:31:56,497 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 18:31:56,497 - offer.offer_logger - INFO - finding product with the given specification
+2023-01-31 18:31:56,497 - offer.offer_logger - INFO - product found for the name APPLE IPHONE 14
+2023-01-31 18:42:50,324 - offer.offer_logger - INFO - all products found
+2023-01-31 18:43:02,177 - offer.offer_logger - INFO - all products found
+2023-01-31 18:43:11,103 - offer.offer_logger - INFO - finding the product of name APPLE IPHONE 14
+2023-01-31 18:43:11,103 - offer.offer_logger - INFO - finding product with the given specification
+2023-01-31 18:43:11,104 - offer.offer_logger - INFO - product found for the name APPLE IPHONE 14
+2023-01-31 18:44:49,433 - product.product_logger - INFO - into the product creation module
+2023-01-31 18:44:49,489 - product.product_logger - INFO - creating a new product
+2023-01-31 18:44:49,496 - product.product_logger - INFO - user is found and is active
+2023-01-31 18:44:49,500 - product.product_logger - INFO - product successfully created
+2023-01-31 18:45:24,276 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 18:45:24,276 - user.user_logger - INFO - Into the user view set
+2023-01-31 18:45:24,281 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 18:45:24,281 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 18:45:24,282 - shop.shop_logger - INFO - into the shop module
+2023-01-31 18:45:24,290 - product.product_logger - INFO - into the product serializer module
+2023-01-31 18:45:24,291 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 18:45:24,293 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 18:45:24,293 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 18:45:24,296 - product.product_logger - INFO - entering the product view set module
+2023-01-31 18:56:41,002 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 18:56:41,003 - user.user_logger - INFO - Into the user view set
+2023-01-31 18:56:41,010 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 18:56:41,010 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 18:56:41,011 - shop.shop_logger - INFO - into the shop module
+2023-01-31 18:56:41,020 - product.product_logger - INFO - into the product serializer module
+2023-01-31 18:56:41,021 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 18:56:41,023 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 18:56:41,024 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 18:56:41,027 - product.product_logger - INFO - entering the product view set module
+2023-01-31 18:56:46,237 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 18:56:46,410 - user.user_logger - ERROR - {'username': [ErrorDetail(string='user with this username already exists.', code='unique')], 'contact_number': [ErrorDetail(string='user with this contact number already exists.', code='unique')], 'email': [ErrorDetail(string='user with this email already exists.', code='unique')]} has occurred
+2023-01-31 19:15:28,097 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:15:28,162 - user.user_logger - ERROR - {'contact_number': [ErrorDetail(string='user with this contact number already exists.', code='unique')], 'email': [ErrorDetail(string='user with this email already exists.', code='unique')]} has occurred
+2023-01-31 19:15:32,837 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:15:32,896 - user.user_logger - ERROR - {'email': [ErrorDetail(string='user with this email already exists.', code='unique')]} has occurred
+2023-01-31 19:15:37,585 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:15:37,654 - user.user_logger - INFO - Entering the user serializer validation 
+2023-01-31 19:15:37,655 - user.user_logger - INFO - user email is valid
+2023-01-31 19:15:37,655 - user.user_logger - INFO - decrypting the password
+2023-01-31 19:15:37,957 - user.user_logger - INFO - user data successfully validated and serialized
+2023-01-31 19:15:37,966 - user.user_logger - INFO - Entering the user serializer validation 
+2023-01-31 19:15:37,966 - user.user_logger - INFO - user email is valid
+2023-01-31 19:15:37,967 - user.user_logger - INFO - decrypting the password
+2023-01-31 19:15:38,218 - user.user_logger - INFO - user data successfully validated and serialized
+2023-01-31 19:15:38,221 - user.user_logger - INFO - User successfully created
+2023-01-31 19:15:46,695 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:15:46,699 - user.user_logger - ERROR - Failed to validate the schema
+2023-01-31 19:15:59,752 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:15:59,755 - user.user_logger - ERROR - Failed to validate the schema
+2023-01-31 19:16:17,905 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:16:17,963 - user.user_logger - ERROR - {'username': [ErrorDetail(string='user with this username already exists.', code='unique')], 'contact_number': [ErrorDetail(string='user with this contact number already exists.', code='unique')], 'email': [ErrorDetail(string='user with this email already exists.', code='unique')]} has occurred
+2023-01-31 19:16:35,338 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:16:35,399 - user.user_logger - INFO - Entering the user serializer validation 
+2023-01-31 19:16:35,399 - user.user_logger - INFO - user email is valid
+2023-01-31 19:16:35,399 - user.user_logger - INFO - decrypting the password
+2023-01-31 19:16:35,657 - user.user_logger - INFO - user data successfully validated and serialized
+2023-01-31 19:16:35,666 - user.user_logger - INFO - Entering the user serializer validation 
+2023-01-31 19:16:35,667 - user.user_logger - INFO - user email is valid
+2023-01-31 19:16:35,667 - user.user_logger - INFO - decrypting the password
+2023-01-31 19:16:35,918 - user.user_logger - INFO - user data successfully validated and serialized
+2023-01-31 19:16:35,922 - user.user_logger - INFO - User successfully created
+2023-01-31 19:19:55,075 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 19:19:55,075 - user.user_logger - INFO - Into the user view set
+2023-01-31 19:19:55,079 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 19:19:55,080 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 19:19:55,081 - shop.shop_logger - INFO - into the shop module
+2023-01-31 19:19:55,085 - product.product_logger - INFO - into the product serializer module
+2023-01-31 19:19:55,085 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 19:19:55,087 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 19:19:55,088 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 19:19:55,091 - product.product_logger - INFO - entering the product view set module
+2023-01-31 19:20:08,186 - user.user_logger - INFO - Entering the user creation method
+2023-01-31 19:20:08,193 - user.user_logger - ERROR - Failed to validate the schema
+2023-01-31 19:20:57,479 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 19:20:57,479 - user.user_logger - INFO - Into the user view set
+2023-01-31 19:20:57,483 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 19:20:57,484 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 19:20:57,487 - shop.shop_logger - INFO - into the shop module
+2023-01-31 19:20:57,492 - product.product_logger - INFO - into the product serializer module
+2023-01-31 19:20:57,492 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 19:20:57,496 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 19:20:57,497 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 19:20:57,502 - product.product_logger - INFO - entering the product view set module
+2023-01-31 19:30:49,202 - user.user_logger - INFO - Entering the user deserialized response module
+2023-01-31 19:30:49,203 - user.user_logger - INFO - Into the user view set
+2023-01-31 19:30:49,214 - shop.shop_logger - INFO - entering the shop serializer module
+2023-01-31 19:30:49,215 - shop.shop_logger - INFO - entering the shop deserialized response module
+2023-01-31 19:30:49,216 - shop.shop_logger - INFO - into the shop module
+2023-01-31 19:30:49,227 - product.product_logger - INFO - into the product serializer module
+2023-01-31 19:30:49,228 - product.product_logger - INFO - into the product deserializer response module
+2023-01-31 19:30:49,236 - offer.offer_logger - INFO - entering offer serializer module
+2023-01-31 19:30:49,236 - offer.offer_logger - INFO - into the offer deserialized response module
+2023-01-31 19:30:49,242 - product.product_logger - INFO - entering the product view set module
